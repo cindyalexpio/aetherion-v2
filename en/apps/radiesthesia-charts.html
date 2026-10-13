@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Document Nº 07 — Radiesthesia &amp; Pendulum Dowsing Charts · Aetherion Archive</title>
+<meta name="theme-color" content="#0a0e1a">
+<style>
+:root{
+  --bg:#0a0e1a; --panel-hi:#17130d; --panel-lo:#100d09;
+  --line:rgba(212,175,55,.28); --line-soft:rgba(212,175,55,.13);
+  --ink:#e9e5d8; --ink-soft:#c9c6bc; --muted:#8b90a3; --dim:#5d6377;
+  --gold:#d4af37; --gold-brite:#e6c15c; --gold-deep:#9a7b2e;
+  --stamp:#c0453a;
+  --serif:Georgia,"Palatino Linotype","Times New Roman",serif;
+  --type:"Courier New",Courier,monospace;
+  --mono:ui-monospace,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(76,95,213,.13), transparent 60%),
+    radial-gradient(ellipse 70% 55% at 50% 112%, rgba(212,175,55,.09), transparent 62%),
+    radial-gradient(1px 1px at 14% 26%, rgba(212,175,55,.3), transparent 100%),
+    radial-gradient(1px 1px at 82% 18%, rgba(124,108,240,.28), transparent 100%),
+    radial-gradient(1.5px 1.5px at 64% 78%, rgba(212,175,55,.22), transparent 100%),
+    radial-gradient(1px 1px at 30% 88%, rgba(124,108,240,.2), transparent 100%),
+    var(--bg);
+  color:var(--ink);
+  font-family:var(--serif);
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:44px 18px;
+  overflow-x:hidden;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;background:radial-gradient(ellipse at 50% 45%, transparent 52%, rgba(0,0,0,.55) 100%)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;background:repeating-linear-gradient(0deg, rgba(255,255,255,.016) 0 1px, transparent 1px 3px)}
+.doc{
+  position:relative;width:100%;max-width:720px;
+  background:
+    linear-gradient(180deg, rgba(212,175,55,.05), transparent 26%),
+    repeating-linear-gradient(90deg, rgba(212,175,55,.02) 0 2px, transparent 2px 7px),
+    linear-gradient(180deg, var(--panel-hi) 0%, var(--panel-lo) 100%);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:36px 28px 26px;
+  box-shadow:0 34px 90px -22px rgba(0,0,0,.85), inset 0 1px 0 rgba(212,175,55,.09), inset 0 0 60px rgba(0,0,0,.35);
+  transform:rotate(-.5deg);
+  overflow:hidden;
+}
+.doc::before,.doc::after{content:"✦";position:absolute;color:var(--gold-deep);font-size:11px;z-index:2}
+.doc::before{top:12px;left:14px}
+.doc::after{bottom:12px;right:14px}
+.watermark{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-weight:700;font-size:clamp(44px,9vw,88px);letter-spacing:.28em;color:rgba(212,175,55,.045);white-space:nowrap;pointer-events:none;z-index:0;font-family:var(--serif)}
+.doc-head{position:relative;z-index:1;text-align:center;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.seal{color:var(--gold);font-size:19px;margin-bottom:8px}
+.doc-ref{font-family:var(--mono);font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px}
+h1{font-size:clamp(19px,4.6vw,26px);color:var(--gold-brite);letter-spacing:.04em;line-height:1.25;margin-bottom:10px}
+.founder{font-family:var(--mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
+.stamp{
+  position:absolute;top:-4px;right:6px;z-index:3;transform:rotate(-11deg);
+  font-family:var(--type);font-weight:700;font-size:13px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--stamp);border:2.5px solid var(--stamp);border-radius:3px;
+  box-shadow:inset 0 0 0 2px var(--panel-lo), inset 0 0 0 3.5px var(--stamp);
+  padding:6px 12px 6px 16px;background:rgba(192,69,58,.07);opacity:.85;
+}
+.intro{position:relative;z-index:1;font-size:14.5px;line-height:1.75;color:var(--ink-soft);margin-bottom:24px}
+.intro::first-letter{font-size:2.7em;float:left;line-height:.82;padding:4px 10px 0 0;color:var(--gold);font-weight:700}
+.sec{position:relative;z-index:1;margin-bottom:24px}
+.kicker{font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-deep);margin-bottom:7px}
+.sec h2{font-size:16.5px;color:var(--gold-brite);letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid var(--line-soft);padding-bottom:7px;margin-bottom:14px}
+.key-table{width:100%;border-collapse:collapse;font-size:13px}
+.key-table th{font-family:var(--serif);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-deep);text-align:left;padding:8px 10px;border-bottom:1px solid rgba(212,175,55,.32)}
+.key-table td{padding:9px 10px;border-bottom:1px solid var(--line-soft);color:var(--ink-soft);line-height:1.5;vertical-align:top}
+.key-table td:first-child{font-family:var(--type);font-weight:700;font-size:11.5px;color:var(--gold-brite);white-space:nowrap}
+.key-table tr:last-child td{border-bottom:none}
+.protocol{list-style:none;counter-reset:step}
+.protocol li{counter-increment:step;position:relative;padding:0 0 13px 46px;font-size:13.5px;line-height:1.65;color:var(--ink-soft)}
+.protocol li:last-child{padding-bottom:0}
+.protocol li::before{content:counter(step,decimal-leading-zero);position:absolute;left:0;top:0;width:30px;height:30px;border:1px solid rgba(212,175,55,.45);border-radius:50%;color:var(--gold);font-family:var(--mono);font-size:11.5px;display:flex;align-items:center;justify-content:center}
+.protocol li b{color:var(--gold-brite);font-weight:700}
+.sens-ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--dim);margin-bottom:6px}
+.sens-bar{height:8px;border-radius:99px;border:1px solid rgba(212,175,55,.3);background:linear-gradient(90deg,#232a44 0%, #3a4a7a 45%, var(--gold) 100%)}
+.sens-marks{position:relative;height:70px;margin-top:8px}
+.smark{position:absolute;top:0;width:92px;transform:translateX(-50%);text-align:center}
+.smark::before{content:"";display:block;width:1px;height:11px;background:var(--gold);margin:0 auto 5px}
+.smark b{display:block;font-family:var(--mono);font-size:12px;color:var(--gold-brite);letter-spacing:.5px}
+.smark span{display:block;font-family:var(--serif);font-style:italic;font-size:10px;line-height:1.35;color:var(--muted);margin-top:2px}
+.smark.first{transform:none;text-align:left}
+.smark.first::before{margin-left:0}
+.smark.last{transform:translateX(-100%);text-align:right}
+.smark.last::before{margin-right:0}
+.swing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:12px}
+.swing-card{background:rgba(6,9,18,.4);border:1px solid var(--line-soft);border-radius:8px;padding:14px 12px 12px;text-align:center}
+.fig{height:72px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.fig .shape{position:relative;width:64px;height:64px}
+.d-ring{position:absolute;inset:8px;border:2px solid var(--gold-brite);border-radius:50%;opacity:.85}
+.d-head{position:absolute;width:0;height:0;border:6px solid transparent}
+.d-head-r{top:2px;left:58%;border-left-color:var(--gold-brite)}
+.d-head-l{top:2px;left:36%;border-right-color:var(--gold-brite)}
+.d-ell-h{position:absolute;inset:17px 4px;border:2px solid var(--gold-brite);border-radius:50%;opacity:.85}
+.d-ell-v{position:absolute;inset:4px 17px;border:2px solid var(--gold-brite);border-radius:50%;opacity:.85}
+.d-hl{left:0;top:50%;transform:translateY(-50%);border-right-color:var(--gold-brite)}
+.d-hr{right:0;top:50%;transform:translateY(-50%);border-left-color:var(--gold-brite)}
+.d-vt{top:0;left:50%;transform:translateX(-50%);border-bottom-color:var(--gold-brite)}
+.d-vb{bottom:0;left:50%;transform:translateX(-50%);border-top-color:var(--gold-brite)}
+.d-fig8::before,.d-fig8::after{content:"";position:absolute;top:12px;width:34px;height:42px;border:2px solid var(--gold-brite);border-radius:50%;opacity:.85}
+.d-fig8::before{left:0}
+.d-fig8::after{right:0}
+.d-line{position:absolute;top:4px;left:50%;width:2px;height:39px;transform:translateX(-50%);background:var(--gold-deep)}
+.d-bob{position:absolute;bottom:8px;left:50%;width:13px;height:13px;transform:translateX(-50%);border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(212,175,55,.55)}
+.s-name{display:block;font-family:var(--serif);font-size:13.5px;letter-spacing:.03em;color:var(--gold-brite)}
+.s-mean{display:block;font-family:var(--serif);font-style:italic;font-size:10.5px;line-height:1.45;color:var(--muted);margin-top:4px}
+.doc-foot{position:relative;z-index:1;margin-top:26px;padding-top:18px;border-top:1px solid var(--line);text-align:center}
+.back-link{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(212,175,55,.4);border-radius:6px;padding:11px 20px;margin-bottom:16px}
+.back-link:hover{background:rgba(212,175,55,.09)}
+.rights{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--dim);margin-bottom:7px}
+.disclaimer{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--dim)}
+@media (max-width:560px){
+  body{padding:26px 12px}
+  .doc{padding:28px 18px 20px;transform:none;border-radius:5px}
+  .stamp{top:-2px;right:2px;font-size:11px;letter-spacing:3px;padding:5px 9px 5px 12px}
+  .sens-marks{height:88px}
+  .smark{width:78px}
+  .smark span{font-size:9px}
+  .swing-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+}
+</style>
+</head>
+<body>
+<main class="doc">
+  <div class="watermark">AETHERION</div>
+  <header class="doc-head">
+    <div class="seal">✦</div>
+    <div class="doc-ref">Aetherion — Field Document Nº 07</div>
+    <h1>Radiesthesia &amp; Pendulum Dowsing Field Charts</h1>
+    <div class="founder">Pio Esposito — Founder &amp; Curator</div>
+    <div class="stamp">Declassified</div>
+  </header>
+
+  <p class="intro">Pendulum dowsing is among the oldest of the lost practical arts — older, the Archive maintains, than the plough or the loom. For three centuries it was dismissed as superstition, and for three centuries the sensitive practitioner answered with the same demonstration: pose a question, and watch what the pendulum swings. This document preserves the Archive's standard calibration chart — the response key, the L-rod protocol, and the sensitivity scale by which the student measures the instrument that never leaves the hand.</p>
+
+  <section class="sec">
+    <div class="kicker">Sheet A · Response Key</div>
+    <h2>Pendulum Response Key</h2>
+    <table class="key-table">
+      <tr><th>Swing Direction</th><th>Meaning</th></tr>
+      <tr><td>Clockwise</td><td>Yes / Confirmed — the field assents.</td></tr>
+      <tr><td>Counter-clockwise</td><td>No / Denied — the field refuses.</td></tr>
+      <tr><td>Ellipse L–R</td><td>Uncertain — the question was badly asked.</td></tr>
+      <tr><td>Ellipse F–B</td><td>Danger — stand back from this ground.</td></tr>
+      <tr><td>Straight line</td><td>No signal — silence, or an empty hand.</td></tr>
+    </table>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">Sheet B · Map Protocol</div>
+    <h2>L-Rod Reading Protocol</h2>
+    <ol class="protocol">
+      <li>Hold both L-rods lightly, <b>elbows relaxed</b>, arms held parallel to the ground.</li>
+      <li>Walk the map slowly, eyes on the terrain <b>beneath the sheet</b>.</li>
+      <li>When the rods <b>converge and cross</b>, mark the spot: a line passes beneath them.</li>
+      <li>When they <b>diverge and splay outward</b>, the line has been left behind.</li>
+      <li><b>Three convergences on the same bearing</b> confirm the trace. Record and proceed.</li>
+    </ol>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">Sheet C · Instrument Calibration</div>
+    <h2>Sensitivity Scale</h2>
+    <div class="sens-ends"><span>0</span><span>100</span></div>
+    <div class="sens-bar"></div>
+    <div class="sens-marks">
+      <div class="smark first"><b>0</b><span>Dead stone — no hand, no answer.</span></div>
+      <div class="smark" style="left:25%"><b>25</b><span>First tremor — the hand begins to listen.</span></div>
+      <div class="smark" style="left:50%"><b>50</b><span>The average practitioner — serviceable, sincere.</span></div>
+      <div class="smark" style="left:75%"><b>75</b><span>Needle-sharp — the rod hesitates at nothing.</span></div>
+      <div class="smark last"><b>100</b><span>The dowser's dowser — legend walks here.</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">Sheet D · Pattern Library</div>
+    <h2>Swing Pattern Library</h2>
+    <div class="swing-grid">
+      <div class="swing-card">
+        <div class="fig"><span class="shape"><i class="d-ring"></i><i class="d-head d-head-r"></i></span></div>
+        <span class="s-name">Clockwise</span>
+        <span class="s-mean">Assent — the field answers yes.</span>
+      </div>
+      <div class="swing-card">
+        <div class="fig"><span class="shape"><i class="d-ring"></i><i class="d-head d-head-l"></i></span></div>
+        <span class="s-name">Counter-clockwise</span>
+        <span class="s-mean">Refusal — the field answers no.</span>
+      </div>
+      <div class="swing-card">
+        <div class="fig"><span class="shape"><i class="d-ell-h"></i><i class="d-head d-hl"></i><i class="d-head d-hr"></i></span></div>
+        <span class="s-name">Ellipse L–R</span>
+        <span class="s-mean">Hesitation — a question badly asked.</span>
+      </div>
+      <div class="swing-card">
+        <div class="fig"><span class="shape"><i class="d-ell-v"></i><i class="d-head d-vt"></i><i class="d-head d-vb"></i></span></div>
+        <span class="s-name">Ellipse F–B</span>
+        <span class="s-mean">Warning — stand back from this ground.</span>
+      </div>
+      <div class="swing-card">
+        <div class="fig"><span class="shape d-fig8"></span></div>
+        <span class="s-name">Figure-8</span>
+        <span class="s-mean">Crosscurrents — two lines in contest.</span>
+      </div>
+      <div class="swing-card">
+        <div class="fig"><span class="shape"><i class="d-line"></i><i class="d-bob"></i></span></div>
+        <span class="s-name">Dead Hang</span>
+        <span class="s-mean">Silence — no signal, no response.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="doc-foot">
+    <a class="back-link" href="../index.html">Return to Archive</a>
+    <div class="rights">— Pio Esposito · All Rights Reserved © 2026 —</div>
+    <div class="disclaimer">Interactive fiction — for entertainment only.</div>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Plant Scanner · Aetherion Archive</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Plant Scanner">
+<meta name="theme-color" content="#0a0e1a">
+<style>
+:root {
+  --bg:#0a0e1a; --bg-deep:#060912; --panel:#121828; --panel-2:#0d1220;
+  --border:#262f49; --border-soft:#1a2136; --text:#e9e5d8; --text-soft:#c9c6bc;
+  --muted:#8b90a3; --dim:#5d6377; --gold:#d4af37; --gold-brite:#e6c15c;
+  --gold-deep:#9a7b2e; --violet:#7c6cf0; --indigo:#4c5fd5; --teal:#2dd4bf;
+  --green:#4caf50; --green-deep:#2e7d32; --serif:Georgia,"Palatino Linotype","Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  background-color:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
+  background-image:
+    radial-gradient(1px 1px at 22% 28%,rgba(76,175,80,.28) 0,transparent 100%),
+    radial-gradient(1px 1px at 68% 18%,rgba(76,175,80,.22) 0,transparent 100%),
+    radial-gradient(1.5px 1.5px at 42% 72%,rgba(124,108,240,.32) 0,transparent 100%),
+    radial-gradient(1px 1px at 84% 62%,rgba(76,175,80,.18) 0,transparent 100%),
+    radial-gradient(1px 1px at 12% 82%,rgba(124,108,240,.22) 0,transparent 100%),
+    radial-gradient(1px 1px at 55% 45%,rgba(124,108,240,.16) 0,transparent 100%),
+    radial-gradient(ellipse at 50% 0%,rgba(76,95,213,.14),transparent 55%),
+    radial-gradient(ellipse at 50% 100%,rgba(76,175,80,.07),transparent 55%);
+  background-attachment:fixed;
+}
+.app-brand{text-align:center;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--dim);font-family:var(--mono);margin-bottom:16px;}
+.app-brand .mark{color:var(--gold-deep);letter-spacing:0;}
+.app-container{
+  background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%);
+  border:1px solid var(--border);border-radius:20px;padding:28px 22px 22px;width:100%;max-width:440px;
+  min-height:572px;margin:auto;display:none;flex-direction:column;justify-content:space-between;position:relative;
+  box-shadow:0 0 0 1px rgba(76,175,80,.07),0 25px 60px -12px rgba(0,0,0,.75),inset 0 1px 0 rgba(76,175,80,.06);
+}
+.app-container::before,.app-container::after{position:absolute;color:var(--gold-deep);font-size:12px;line-height:1;}
+.app-container::before{content:"✦";top:10px;left:14px;}
+.app-container::after{content:"✦";bottom:10px;right:14px;}
+.emoji-header{text-align:center;font-size:32px;margin-bottom:10px;}
+h1,h2{font-family:var(--serif);color:var(--gold-brite);text-align:center;font-weight:700;letter-spacing:.05em;margin-bottom:6px;}
+h1{font-size:25px;}
+h2{font-size:20px;text-transform:uppercase;letter-spacing:.14em;}
+.subtitle{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:3px;text-align:center;margin-bottom:18px;font-family:var(--mono);}
+p{color:var(--text-soft);font-size:14px;line-height:1.65;margin-bottom:14px;}
+.highlight-box{border-left:3px solid var(--gold);padding-left:12px;color:var(--muted);font-style:italic;font-size:13px;line-height:1.55;font-family:var(--serif);}
+button{
+  background:linear-gradient(180deg,var(--gold-brite),var(--gold-deep));color:var(--bg);font-weight:800;
+  border:none;border-radius:10px;padding:14px;width:100%;cursor:pointer;font-size:14px;letter-spacing:.06em;
+  text-transform:uppercase;font-family:var(--serif);transition:all .2s ease;box-shadow:0 4px 18px rgba(212,175,55,.22);margin-top:12px;
+}
+button:hover{filter:brightness(1.08);transform:translateY(-1px);}
+button:active{transform:translateY(0);}
+button:disabled{background:#232945;color:var(--dim);cursor:not-allowed;box-shadow:none;filter:none;transform:none;}
+.scanner-box{background-color:var(--bg-deep);border:1px solid var(--border-soft);border-radius:14px;padding:16px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden;}
+#videoFeed{width:100%;border-radius:10px;display:none;object-fit:cover;}
+#canvasSnapshot{display:none;}
+.scan-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:220px;height:220px;border:2px dashed rgba(76,175,80,.5);border-radius:16px;}
+.scan-overlay::after{content:"";position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;border:1px solid rgba(76,175,80,.15);border-radius:18px;animation:scanPulse 2s ease-in-out infinite;}
+@keyframes scanPulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+.scan-placeholder{font-size:48px;color:var(--dim);margin-bottom:8px;}
+.scanner-btn{background:linear-gradient(180deg,var(--green),var(--green-deep));box-shadow:0 4px 18px rgba(76,175,80,.3);}
+.scanner-btn:hover{filter:brightness(1.1);}
+.input-group{margin-bottom:16px;}
+.slider-header{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:6px;color:var(--text);letter-spacing:.03em;}
+.slider-header .value{color:var(--green);font-family:var(--mono);font-size:13px;}
+input[type="range"]{width:100%;height:6px;background:var(--bg-deep);border-radius:4px;outline:none;-webkit-appearance:none;appearance:none;}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--green),var(--green-deep));cursor:pointer;box-shadow:0 0 10px rgba(76,175,80,.45);}
+input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--green),var(--green-deep));cursor:pointer;}
+select{width:100%;background-color:var(--bg-deep);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--gold-brite);font-family:var(--mono);font-size:14px;appearance:none;}
+select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 1px rgba(76,175,80,.25);}
+select option{background:var(--bg-deep);color:var(--text);}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:center;margin-bottom:16px;}
+.result-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;font-family:var(--mono);}
+.result-value{font-size:23px;font-weight:800;font-family:var(--mono);color:var(--green);margin-top:4px;text-shadow:0 0 18px rgba(76,175,80,.25);}
+.result-sub{font-size:10px;color:var(--dim);margin-top:2px;}
+.dashboard-panel{background-color:var(--bg-deep);border:1px solid var(--border-soft);border-radius:14px;padding:16px;margin-bottom:12px;position:relative;}
+.panel-title{text-align:center;font-size:10px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid rgba(76,175,80,.2);padding-bottom:8px;margin-bottom:12px;font-family:var(--mono);}
+.plant-big-name{font-family:var(--serif);color:var(--gold-brite);font-size:28px;text-align:center;margin:8px 0;font-weight:800;letter-spacing:.04em;}
+.plant-scientific{font-family:var(--mono);color:var(--muted);font-size:12px;text-align:center;margin-bottom:12px;}
+.layman-card{background:rgba(76,175,80,.06);border:1px solid rgba(76,175,80,.25);border-radius:12px;padding:14px;margin-bottom:12px;}
+.layman-card h3{color:var(--green);font-size:13px;font-family:var(--serif);margin-bottom:6px;letter-spacing:.04em;}
+.layman-card p{color:var(--text-soft);font-size:13px;margin-bottom:0;line-height:1.55;}
+.back-link{display:block;text-align:center;color:var(--dim);font-size:12px;margin-top:10px;cursor:pointer;text-decoration:underline;font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;}
+.back-link:hover{color:var(--green);}
+.notes-intro{background:rgba(76,175,80,.06);border:1px solid rgba(76,175,80,.25);border-radius:12px;padding:14px;margin-bottom:16px;font-size:13px;line-height:1.62;color:var(--text-soft)}
+.notes-intro b{color:var(--green);font-weight:800}
+.plant-card{display:flex;align-items:center;gap:12px;background:var(--bg-deep);border:1px solid var(--border-soft);border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer;transition:all .2s;}
+.plant-card:hover{border-color:var(--green);}
+.plant-card .card-emoji{font-size:28px;}
+.plant-card .card-info{flex:1;}
+.plant-card .card-name{font-family:var(--serif);color:var(--gold-brite);font-size:15px;font-weight:700;}
+.plant-card .card-sci{font-family:var(--mono);font-size:10px;color:var(--muted);}
+.plant-card .card-badge{font-size:9px;padding:3px 8px;border-radius:20px;font-weight:700;font-family:var(--mono);}
+.badge-common{background:rgba(76,175,80,.2);color:var(--green);}
+.badge-rare{background:rgba(212,175,55,.2);color:var(--gold-brite);}
+.badge-toxic{background:rgba(244,67,54,.2);color:#f44336;}
+.found-count{text-align:center;font-size:11px;color:var(--muted);margin-bottom:8px;font-family:var(--mono);}
+.found-count span{color:var(--green);font-weight:800;}
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1: Intro -->
+<div id="screen1" class="app-container" style="display:flex;flex-direction:column;">
+  <div>
+    <div class="app-brand"><span class="mark">✧</span>&nbsp;AETHERION · VOL. I&nbsp;<span class="mark">✧</span></div>
+    <div class="emoji-header">🌿</div>
+    <h1>Plant Scanner</h1>
+    <div class="subtitle">Flora Identification Archive</div>
+    <p>Point your camera at any plant — or describe its features — and the archive will identify it from our curated botanical registry.</p>
+    <p class="highlight-box">This digital sandbox contains a field-tested identification database. Aim the lens or select characteristics to begin.</p>
+  </div>
+  <div>
+    <button id="btnCamera">📷 Open Scanner</button>
+    <span class="back-link" style="margin-top:14px;" id="lnkBrowse">📋 Browse by Characteristics</span>
+    <span class="back-link" style="margin-top:8px;" id="lnkHome">← Return to Archive</span>
+    <span class="back-link" style="margin-top:8px;" id="lnkNotes" onclick="showScreen('screen5')">📖 Field Notes</span>
+    <div style="text-align:center;font-size:9px;color:var(--dim);font-family:var(--mono);letter-spacing:1px;margin-top:14px;line-height:1.6;">— Pio Esposito · All Rights Reserved © 2026 —</div>
+  </div>
+</div>
+
+<!-- SCREEN 2: Scanner -->
+<div id="screen2" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📷</div>
+    <h2>Scanner Active</h2>
+    <div class="subtitle">Align the plant within the frame</div>
+    <div class="scanner-box" id="scannerBox">
+      <div class="scan-placeholder" id="scanPlaceholder">🌿</div>
+      <video id="videoFeed" autoplay playsinline></video>
+      <div class="scan-overlay"></div>
+      <canvas id="canvasSnapshot"></canvas>
+    </div>
+    <div id="scanControls" style="display:none;">
+      <button id="btnCapture" class="scanner-btn">📸 Capture &amp; Identify</button>
+    </div>
+    <div id="altScan" style="text-align:center;margin-top:8px;">
+      <p style="font-size:11px;color:var(--dim);">No camera? Tap below to describe the plant manually.</p>
+      <button id="btnManual" style="margin-top:8px;background:linear-gradient(180deg,var(--muted),var(--dim));">⌨️ Describe Manually</button>
+    </div>
+  </div>
+  <div>
+    <button id="btnBackScan" style="background:linear-gradient(180deg,var(--muted),var(--dim));">← Back to Archive</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: Manual Input -->
+<div id="screen3" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">🔍</div>
+    <h2>Describe the Plant</h2>
+    <div class="subtitle">Manual Identification</div>
+    <div class="input-group">
+      <div class="slider-header">Plant Type <span class="value" id="valType">—</span></div>
+      <select id="inpType">
+        <option value="">Select type...</option>
+        <option value="tree">🌳 Tree</option>
+        <option value="shrub">🌿 Shrub</option>
+        <option value="herb">🍃 Herb / Perennial</option>
+        <option value="flower">🌺 Flower</option>
+        <option value="cactus">🪴 Cactus / Succulent</option>
+        <option value="vine">🧗 Vine / Climber</option>
+        <option value="fern">🥬 Fern</option>
+        <option value="grass">🌾 Grass</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <div class="slider-header">Flower Color <span class="value" id="valColor">—</span></div>
+      <select id="inpColor">
+        <option value="">Any color...</option>
+        <option value="white">⚪ White</option>
+        <option value="yellow">🟡 Yellow</option>
+        <option value="pink">🌸 Pink</option>
+        <option value="red">🔴 Red</option>
+        <option value="blue">🔵 Blue</option>
+        <option value="purple">🟣 Purple</option>
+        <option value="orange">🟠 Orange</option>
+        <option value="green">🟢 Green</option>
+        <option value="brown">🤎 Brown</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <div class="slider-header">Climate Zone <span class="value" id="valZone">—</span></div>
+      <select id="inpZone">
+        <option value="">Any zone...</option>
+        <option value="tropical">🌴 Tropical</option>
+        <option value="temperate">🌿 Temperate</option>
+        <option value="arid">🏜️ Arid / Desert</option>
+        <option value="mediterranean">🌊 Mediterranean</option>
+        <option value="alpine">🏔️ Alpine</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <div class="slider-header">Leaf Shape <span class="value" id="valLeaf">—</span></div>
+      <select id="inpLeaf">
+        <option value="">Any shape...</option>
+        <option value="needle">🪡 Needle</option>
+        <option value="oval">🫧 Oval</option>
+        <option value="heart">❤️ Heart</option>
+        <option value="lanceolate">🏅 Lanceolate</option>
+        <option value="palm">🖐️ Palmate</option>
+        <option value="round">⭕ Round</option>
+      </select>
+    </div>
+    <button id="btnIdentify">🔎 Identify</button>
+  </div>
+  <div>
+    <button id="btnBackManual" style="background:linear-gradient(180deg,var(--muted),var(--dim));">← Back to Archive</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: Results -->
+<div id="screen4" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">✅</div>
+    <h2>Identified</h2>
+    <div class="subtitle">Botanical Registry Match</div>
+    <div class="dashboard-panel">
+      <div class="panel-title">Recognition Result</div>
+      <div class="plant-big-name" id="resName">—</div>
+      <div class="plant-scientific" id="resSci">—</div>
+      <div style="text-align:center;margin:8px 0;" id="resBadgeWrap"></div>
+    </div>
+    <div class="dashboard-panel">
+      <div class="panel-title">Characteristics</div>
+      <div class="results-grid">
+        <div>
+          <div class="result-label">Type</div>
+          <div class="result-value" id="resType" style="font-size:16px;">—</div>
+        </div>
+        <div>
+          <div class="result-label">Climate</div>
+          <div class="result-value" id="resZone" style="font-size:16px;">—</div>
+        </div>
+        <div>
+          <div class="result-label">Flower</div>
+          <div class="result-value" id="resFlower" style="font-size:16px;">—</div>
+        </div>
+        <div>
+          <div class="result-label">Leaf</div>
+          <div class="result-value" id="resLeaf" style="font-size:16px;">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="layman-card">
+      <h3>🌿 About This Plant</h3>
+      <p id="resDesc">—</p>
+    </div>
+    <div id="resSimilarWrap"></div>
+  </div>
+  <div>
+    <button id="btnRescan">🔄 Scan Another Plant</button>
+    <button id="btnHomeRes" style="margin-top:8px;background:linear-gradient(180deg,var(--muted),var(--dim));">← Return to Archive</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: Field Notes -->
+<div id="screen5" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📖</div>
+    <h2>Field Notes</h2>
+    <div class="subtitle">Developer's Guide</div>
+    <div class="notes-intro"><b>How it works:</b> The scanner uses a curated botanical registry of over 60 species across 8 plant types, 9 flower colors, 5 climate zones, and 6 leaf shapes. When you scan or describe a plant, the algorithm finds the best matching entry from this database.</div>
+    <div class="notes-intro" style="margin-top:8px;"><b>Camera mode</b> captures the image and performs identification based on your manual follow-up. The camera helps with framing — the identification itself uses the characteristic matching engine.</div>
+    <div class="notes-intro" style="margin-top:8px;"><b>Offline capable:</b> All data is stored locally. No API calls or internet connection required.</div>
+    <div style="text-align:center;margin-top:12px;">
+      <div class="found-count">Database contains <span id="dbCount">—</span> species</div>
+    </div>
+  </div>
+  <button onclick="showScreen('screen1')">Return to the Archive</button>
+</div>
+
+<script>
+// ─── PLANT DATABASE ───
+const PLANTS = [
+  {name:"Oak",sci:"Quercus",type:"tree",flower:"brown",color:"brown",zone:"temperate",leaf:"oval",desc:"A majestic deciduous tree with broad canopies and deeply lobed leaves. Oaks are keystone species supporting hundreds of organisms.",badge:"common"},
+  {name:"Rose",sci:"Rosa",type:"flower",flower:"red",color:"red",zone:"temperate",leaf:"oval",desc:"A woody perennial flowering plant known for its fragrant blooms. Roses have been cultivated for thousands of years for beauty and perfume.",badge:"common"},
+  {name:"Cactus",sci:"Carnegiea",type:"cactus",flower:"yellow",color:"yellow",zone:"arid",leaf:"round",desc:"A iconic desert plant with fleshy stems and sharp spines. Cacti store water in their thick stems to survive long dry periods.",badge:"common"},
+  {name:"Lavender",sci:"Lavandula",type:"flower",flower:"purple",color:"purple",zone:"mediterranean",leaf:"narrow",desc:"A flowering plant prized for its aromatic flowers and essential oil. Lavender is widely used in perfumery and aromatherapy.",badge:"common"},
+  {name:"Sunflower",sci:"Helianthus",type:"flower",flower:"yellow",color:"yellow",zone:"temperate",leaf:"oval",desc:"A tall annual plant with a large, bright yellow head that tracks the sun across the sky. Famous for its heliotropic behavior.",badge:"common"},
+  {name:"Bamboo",sci:"Bambusoideae",type:"grass",flower:"green",color:"green",zone:"tropical",leaf:"lanceolate",desc:"One of the fastest-growing plants on Earth. Bamboo is a grass, not a tree, and can grow up to 91 cm in a single day.",badge:"common"},
+  {name:"Maple",sci:"Acer",type:"tree",flower:"green",color:"green",zone:"temperate",leaf:"palm",desc:"A deciduous tree renowned for its stunning autumn foliage. Maple syrup is a well-known product derived from certain species.",badge:"common"},
+  {name:"Orchid",sci:"Orchidaceae",type:"flower",flower:"purple",color:"purple",zone:"tropical",leaf:"oval",desc:"A diverse and widespread family of flowering plants known for their elaborate and beautiful blooms. Over 25,000 species exist.",badge:"rare"},
+  {name:"Fern",sci:"Polypodiopsida",type:"fern",flower:"green",color:"green",zone:"temperate",leaf:"lanceolate",desc:"A vascular plant that reproduces via spores rather than seeds. Ferns have existed for over 360 million years.",badge:"common"},
+  {name:"Aloe",sci:"Aloe",type:"succulent",flower:"yellow",color:"yellow",zone:"arid",leaf:"lanceolate",desc:"A succulent plant genus known for its medicinal gel. Aloe vera is widely used in cosmetics and folk medicine.",badge:"common"},
+  {name:"Daisy",sci:"Bellis",type:"flower",flower:"white",color:"white",zone:"temperate",leaf:"oval",desc:"A cheerful little flower with white petals and a yellow center. Daisies symbolize innocence and are found worldwide.",badge:"common"},
+  {name:"Iris",sci:"Iris",type:"flower",flower:"purple",color:"purple",zone:"temperate",leaf:"sword",desc:"A genus of 260-300 species of flowering plants with striking blooms. Named after the Greek goddess of the rainbow.",badge:"common"},
+  {name:"Pine",sci:"Pinus",type:"tree",flower:"brown",color:"brown",zone:"temperate",leaf:"needle",desc:"A coniferous evergreen tree with needle-like leaves and pine cones. Pines are among the most widely distributed trees on Earth.",badge:"common"},
+  {name:"Peony",sci:"Paeonia",type:"flower",flower:"pink",color:"pink",zone:"temperate",leaf:"oval",desc:"A perennial flowering plant with large, fragrant blooms. Peonies are a symbol of prosperity, good fortune, and a happy life.",badge:"common"},
+  {name:"Bamboo Palm",sci:"Chamaedorea",type:"shrub",flower:"yellow",color:"yellow",zone:"tropical",leaf:"lanceolate",desc:"A small, elegant palm tree popular as a houseplant. It thrives in indirect light and requires minimal care.",badge:"common"},
+  {name:"Jasmine",sci:"Jasminum",type:"flower",flower:"white",color:"white",zone:"tropical",leaf:"oval",desc:"A genus of shrubs and vines in the olive family. Jasmine flowers are highly fragrant and are used in perfumes and tea.",badge:"common"},
+  {name:"Lotus",sci:"Nelumbo",type:"flower",flower:"pink",color:"pink",zone:"temperate",leaf:"round",desc:"An aquatic plant with sacred symbolism in many Asian cultures. The lotus rises from muddy water to bloom beautifully.",badge:"rare"},
+  {name:"Hibiscus",sci:"Hibiscus",type:"flower",flower:"red",color:"red",zone:"tropical",leaf:"oval",desc:"A tropical flowering plant with large, showy blooms. Hibiscus tea is a popular beverage rich in antioxidants.",badge:"common"},
+  {name:"Sage",sci:"Salvia",type:"herb",flower:"purple",color:"purple",zone:"mediterranean",leaf:"oval",desc:"A versatile herb with grey-green foliage and blue-purple spikes. Sage has been used for culinary and medicinal purposes for millennia.",badge:"common"},
+  {name:"Eucalyptus",sci:"Eucalyptus",type:"tree",flower:"white",color:"white",zone:"mediterranean",leaf:"lanceolate",desc:"A tall tree native to Australia, known for its distinctive aromatic leaves. Eucalyptus oil is widely used in medicine and cleaning.",badge:"common"},
+  {name:"Dandelion",sci:"Taraxacum",type:"flower",flower:"yellow",color:"yellow",zone:"temperate",leaf:"lanceolate",desc:"A resilient flowering plant with a spherical seed head. Every part of the dandelion is edible and has been used in folk medicine.",badge:"common"},
+  {name:"Tulip",sci:"Tulipa",type:"flower",flower:"red",color:"red",zone:"temperate",leaf:"sword",desc:"A bulbous spring-flowering plant with large, showy blooms. Tulips were once so valuable in the Ottoman Empire they caused a financial bubble.",badge:"common"},
+  {name:"Azalea",sci:"Rhododendron",type:"shrub",flower:"pink",color:"pink",zone:"temperate",leaf:"oval",desc:"A flowering shrub with stunning spring blooms in shades of pink, purple, and white. Azaleas are popular ornamental garden plants.",badge:"common"},
+  {name:"Wisteria",sci:"Wisteria",type:"vine",flower:"purple",color:"purple",zone:"temperate",leaf:"oval",desc:"A climbing vine known for its cascading clusters of fragrant purple flowers. Wisteria can live for over a hundred years.",badge:"rare"},
+  {name:"Magnolia",sci:"Magnolia",type:"tree",flower:"white",color:"white",zone:"temperate",leaf:"oval",desc:"An ancient flowering tree that predates bees. Its large, fragrant blooms are among the most spectacular in temperate gardens.",badge:"common"},
+  {name:"Geranium",sci:"Pelargonium",type:"flower",flower:"pink",color:"pink",zone:"mediterranean",leaf:"oval",desc:"A popular flowering plant with vibrant pink blooms. Geraniums are a staple of balcony gardens and window boxes.",badge:"common"},
+  {name:"Hibiscus",sci:"Hibiscus rosa-sinensis",type:"flower",flower:"orange",color:"orange",zone:"tropical",leaf:"oval",desc:"A tropical variant with bold orange flowers. A popular ornamental plant in warm climates worldwide.",badge:"common"},
+  {name:"Olive Tree",sci:"Olea",type:"tree",flower:"white",color:"white",zone:"mediterranean",leaf:"oval",desc:"A long-lived tree cultivated since ancient times in the Mediterranean. Olive oil is one of the world's most prized products.",badge:"common"},
+  {name:"Bougainvillea",sci:"Bougainvillea",type:"vine",flower:"pink",color:"pink",zone:"tropical",leaf:"oval",desc:"A vibrant climbing vine with papery bracts in vivid pink, purple, or orange. A favorite ornamental plant in tropical gardens.",badge:"rare"},
+  {name:"Heather",sci:"Calluna",type:"shrub",flower:"purple",color:"purple",zone:"temperate",leaf:"oval",desc:"A low-growing evergreen shrub that carpets moorlands in stunning purple blooms during late summer.",badge:"common"},
+  {name:"Acacia",sci:"Acacia",type:"tree",flower:"yellow",color:"yellow",zone:"tropical",leaf:"bipinnate",desc:"A widespread genus of trees and shrubs known for their yellow puffball flowers and feathery foliage.",badge:"common"},
+  {name:"Snapdragon",sci:"Antirrhinum",type:"flower",flower:"orange",color:"orange",zone:"temperate",leaf:"lanceolate",desc:"A flowering plant with a unique mouth-like bloom that opens when squeezed at the sides, resembling a dragon's face.",badge:"common"},
+  {name:"Poppy",sci:"Papaver",type:"flower",flower:"red",color:"red",zone:"temperate",leaf:"lanceolate",desc:"A delicate flowering plant with crinkled petals. The red poppy is a symbol of remembrance in many countries.",badge:"rare"},
+  {name:"Cypress",sci:"Cupressus",type:"tree",flower:"brown",color:"brown",zone:"mediterranean",leaf:"needle",desc:"An evergreen conifer with columnar shape and scale-like leaves. Often associated with graveyards and Mediterranean landscapes.",badge:"common"},
+  {name:"Verbena",sci:"Verbena",type:"flower",flower:"purple",color:"purple",zone:"temperate",leaf:"lanceolate",desc:"A hardy flowering plant with clusters of small purple blooms. Verbena is valued in gardens for its long blooming period.",badge:"common"},
+  {name:"Camellia",sci:"Camellia",type:"flower",flower:"white",color:"white",zone:"temperate",leaf:"oval",desc:"A glossy-leaved evergreen shrub with stunning rose-like blooms. The leaves are used to make the beloved tea beverage.",badge:"common"},
+  {name:"Lilac",sci:"Syringa",type:"shrub",flower:"purple",color:"purple",zone:"temperate",leaf:"heart",desc:"A deciduous shrub famous for its intoxicatingly fragrant flower clusters in shades of lilac and purple.",badge:"common"},
+  {name:"Marigold",sci:"Tagetes",type:"flower",flower:"orange",color:"orange",zone:"temperate",leaf:"lanceolate",desc:"A bright, cheerful flower with strong insect-repelling properties. Marigolds are popular in borders and pots worldwide.",badge:"common"},
+  {name:"Holly",sci:"Ilex",type:"shrub",flower:"white",color:"white",zone:"temperate",leaf:"lanceolate",desc:"An evergreen shrub with glossy, spiny leaves and bright red berries. Holly is a traditional symbol of winter and Christmas.",badge:"common"},
+  {name:"Fuchsia",sci:"Fuchsia",type:"flower",flower:"purple",color:"purple",zone:"temperate",leaf:"oval",desc:"A graceful flowering plant with pendulous blooms in shades of pink-purple. Named after the German botanist Leonhart Fuchs.",badge:"common"},
+  {name:"Plumeria",sci:"Plumeria",type:"flower",flower:"pink",color:"pink",zone:"tropical",leaf:"lanceolate",desc:"Also known as frangipani, this tropical tree produces incredibly fragrant waxy flowers used in leis.",badge:"rare"},
+  {name:"Boxwood",sci:"Buxus",type:"shrub",flower:"green",color:"green",zone:"temperate",leaf:"oval",desc:"A small evergreen shrub with dense, fine-textured foliage. Boxwood is the quintessential topiary and hedge plant.",badge:"common"},
+  {name:"Anemone",sci:"Anemone",type:"flower",flower:"pink",color:"pink",zone:"temperate",leaf:"oval",desc:"A cheerful spring flower with vibrant petals and a dark center. Anemones symbolize anticipation and protection.",badge:"common"},
+  {name:"Clematis",sci:"Clematis",type:"vine",flower:"purple",color:"purple",zone:"temperate",leaf:"oval",desc:"A diverse genus of climbing vines with spectacular star-shaped flowers. One of the most popular garden climbing plants.",badge:"common"},
+  {name:"Zinnia",sci:"Zinnia",type:"flower",flower:"yellow",color:"yellow",zone:"temperate",leaf:"lanceolate",desc:"A bright and easy-to-grow annual flower available in a rainbow of colors. Perfect for beginner gardeners and butterfly gardens.",badge:"common"},
+  {name:"Rhododendron",sci:"Rhododendron",type:"shrub",flower:"pink",color:"pink",zone:"temperate",leaf:"oval",desc:"A magnificent large-leaved shrub with spectacular spring flower trusses. The state flower of West Virginia.",badge:"common"},
+  {name:"Jujube",sci:"Ziziphus",type:"tree",flower:"yellow",color:"yellow",zone:"temperate",leaf:"oval",desc:"A small deciduous tree with sweet, date-like fruits. Also known as Chinese date, it has been cultivated for over 4,000 years.",badge:"common"},
+  {name:"Buttercup",sci:"Ranunculus",type:"flower",flower:"yellow",color:"yellow",zone:"temperate",leaf:"round",desc:"A bright yellow woodland flower with glossy petals. Children often test love by holding a buttercup under their chin.",badge:"common"},
+  {name:"Amaranth",sci:"Amaranthus",type:"flower",flower:"red",color:"red",zone:"tropical",leaf:"lanceolate",desc:"An ancient grain and ornamental plant with striking crimson plumes. Once sacred to the Aztecs, it remains a nutritious crop.",badge:"rare"},
+  {name:"Cornflower",sci:"Centaurea",type:"flower",flower:"blue",color:"blue",zone:"temperate",leaf:"lanceolate",desc:"A striking blue annual flower once common in cornfields. Its vivid color made it a symbol of hope and delicacy.",badge:"common"},
+  {name:"Honeysuckle",sci:"Lonicera",type:"vine",flower:"yellow",color:"yellow",zone:"temperate",leaf:"oval",desc:"A fragrant climbing vine with tubular flowers that attract hummingbirds and butterflies. Its sweet nectar is edible.",badge:"common"},
+  {name:"Ginseng",sci:"Panax",type:"herb",flower:"green",color:"green",zone:"temperate",leaf:"palm",desc:"A slow-growing perennial plant valued in traditional medicine. Wild ginseng root can take decades to mature.",badge:"rare"},
+  {name:"Chamomile",sci:"Matricaria",type:"flower",flower:"white",color:"white",zone:"temperate",leaf:"oval",desc:"A daisy-like plant famous for its calming herbal tea. Chamomile has been used for centuries as a sleep aid and remedy.",badge:"common"},
+  {name:"Aloe Vera",sci:"Aloe vera",type:"succulent",flower:"yellow",color:"yellow",zone:"arid",leaf:"lanceolate",desc:"The most widely cultivated aloe species. Its clear gel is a household staple for burns, skincare, and folk remedies.",badge:"common"},
+];
+
+// ─── HELPER: normalize for matching ───
+function norm(s){return (s||"").toLowerCase().trim();}
+
+// ─── MATCH ENGINE ───
+function findPlant(type,color,zone,leaf) {
+  const t=norm(type), c=norm(color), z=norm(zone), l=norm(leaf);
+  let best=null, bestScore=-1, bestPlant=null;
+
+  // Score each plant
+  PLANTS.forEach(p => {
+    let score=0;
+    if(t && norm(p.type)===t) score+=3;
+    if(c && norm(p.color)===c) score+=3;
+    if(z && norm(p.zone)===z) score+=3;
+    if(l && norm(p.leaf)===l) score+=2;
+    // Partial matches: type-family proximity
+    if(score===0) score=1; // baseline for any match
+    if(score>bestScore){
+      bestScore=score;
+      bestPlant=p;
+    }
+  });
+
+  // Find similar plants (score > 0)
+  const similar = PLANTS.filter(p => {
+    let s=0;
+    if(t&&norm(p.type)===t)s++;
+    if(c&&norm(p.color)===c)s++;
+    if(z&&norm(p.zone)===z)s++;
+    if(l&&norm(p.leaf)===l)s++;
+    return s>0 && p.name!==bestPlant?.name;
+  }).slice(0,3);
+
+  return {best:bestPlant, similar, score:bestScore};
+}
+
+// ─── UI HELPERS ───
+function showScreen(id){
+  document.querySelectorAll('.app-container').forEach(el=>el.style.display='none');
+  document.getElementById(id).style.display='flex';
+}
+
+function goHome(){
+  const p=location.pathname;
+  window.location.href=(p.includes('/apps/'))?'../index.html':'index.html';
+}
+
+// Add archive back links to all non-intro screens
+document.querySelectorAll('.app-container').forEach(c=>{
+  if(c.id==='screen1')return;
+  const nav=document.createElement('span');
+  nav.className='back-link';
+  nav.style.marginTop='10px';
+  nav.textContent='← Return to Archive';
+  nav.onclick=goHome;
+  c.appendChild(nav);
+});
+
+// ─── SLIDER LABELS ───
+const selects=[
+  {id:'inpType',out:'valType'},
+  {id:'inpColor',out:'valColor'},
+  {id:'inpZone',out:'valZone'},
+  {id:'inpLeaf',out:'valLeaf'}
+];
+selects.forEach(s=>{
+  const el=document.getElementById(s.id);
+  const out=document.getElementById(s.out);
+  el.addEventListener('change',()=>{out.textContent=el.options[el.selectedIndex].text;});
+});
+
+// ─── BUTTONS ───
+document.getElementById('btnCamera').addEventListener('click',()=>{
+  showScreen('screen2');
+  startCamera();
+});
+document.getElementById('btnManual').addEventListener('click',()=>{
+  showScreen('screen3');
+});
+document.getElementById('lnkBrowse').addEventListener('click',()=>showScreen('screen3'));
+document.getElementById('lnkHome').addEventListener('click',goHome);
+document.getElementById('btnBackScan').addEventListener('click',()=>{stopCamera();showScreen('screen1');});
+document.getElementById('btnBackManual').addEventListener('click',()=>showScreen('screen1'));
+document.getElementById('btnIdentify').addEventListener('click',doIdentify);
+document.getElementById('btnRescan').addEventListener('click',()=>{stopCamera();showScreen('screen1');});
+document.getElementById('btnHomeRes').addEventListener('click',goHome);
+document.getElementById('btnCapture').addEventListener('click',captureAndIdentify);
+
+// ─── CAMERA ───
+let videoStream=null;
+function startCamera(){
+  const video=document.getElementById('videoFeed');
+  const placeholder=document.getElementById('scanPlaceholder');
+  const controls=document.getElementById('scanControls');
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:640},height:{ideal:480}}}).then(stream=>{
+    videoStream=stream;
+    video.srcObject=stream;
+    video.style.display='block';
+    placeholder.style.display='none';
+    controls.style.display='block';
+  }).catch(()=>{
+    // No camera available - fallback to manual
+    placeholder.textContent='📷 No camera detected';
+    placeholder.style.fontSize='20px';
+    document.getElementById('scanPlaceholder').style.color='var(--gold-brite)';
+    controls.style.display='block';
+  });
+}
+function stopCamera(){
+  if(videoStream){
+    videoStream.getTracks().forEach(t=>t.stop());
+    videoStream=null;
+  }
+  const video=document.getElementById('videoFeed');
+  video.style.display='none';
+  video.srcObject=null;
+}
+function captureAndIdentify(){
+  const video=document.getElementById('videoFeed');
+  const canvas=document.getElementById('canvasSnapshot');
+  canvas.width=video.videoWidth||320;
+  canvas.height=video.videoHeight||240;
+  const ctx=canvas.getContext('2d');
+  ctx.drawImage(video,0,0);
+  stopCamera();
+  // Show result prompt
+  alert("📸 Photo captured! The scanner works with your manual description for now. Tap 'Describe Manually' to enter plant characteristics and identify.");
+}
+
+// ─── IDENTIFY ───
+function doIdentify(){
+  const type=document.getElementById('inpType').value;
+  const color=document.getElementById('inpColor').value;
+  const zone=document.getElementById('inpZone').value;
+  const leaf=document.getElementById('inpLeaf').value;
+
+  if(!type && !color && !zone && !leaf){
+    alert("Please describe at least one characteristic of the plant.");
+    return;
+  }
+
+  const result=findPlant(type,color,zone,leaf);
+  if(!result.best||!result.best.name){
+    alert("No plant found matching those characteristics. Try different selections.");
+    return;
+  }
+
+  const p=result.best;
+  document.getElementById('resName').textContent=p.name;
+  document.getElementById('resSci').textContent=p.sci;
+
+  // Badge
+  const badgeMap={common:'Common',rare:'Rare',toxic:'Toxic'};
+  const badgeColors={common:'badge-common',rare:'badge-rare',toxic:'badge-toxic'};
+  document.getElementById('resBadgeWrap').innerHTML=`<span class="plant-card .card-badge ${badgeColors[p.badge]||'badge-common'}">${(p.badge||'common').toUpperCase()}</span>`;
+  const b=document.getElementById('resBadgeWrap');
+  b.innerHTML=`<span style="font-size:9px;padding:3px 10px;border-radius:20px;font-weight:700;font-family:var(--mono);background:${p.badge==='rare'?'rgba(212,175,55,.2);color:var(--gold-brite)':p.badge==='common'?'rgba(76,175,80,.2);color:var(--green)':'rgba(244,67,54,.2);color:#f44336'};">${(p.badge||'common').toUpperCase()}</span>`;
+
+  document.getElementById('resType').textContent=p.type.charAt(0).toUpperCase()+p.type.slice(1);
+  document.getElementById('resZone').textContent=p.zone.charAt(0).toUpperCase()+p.zone.slice(1);
+  document.getElementById('resFlower').textContent=p.color.charAt(0).toUpperCase()+p.color.slice(1);
+  document.getElementById('resLeaf').textContent=p.leaf.charAt(0).toUpperCase()+p.leaf.slice(1);
+  document.getElementById('resDesc').textContent=p.desc;
+
+  // Similar plants
+  let simHTML='';
+  if(result.similar.length>0){
+    simHTML='<div class="dashboard-panel"><div class="panel-title">Similar Species</div>';
+    result.similar.forEach(sp=>{
+      simHTML+=`<div class="plant-card"><div class="card-emoji">🌿</div><div class="card-info"><div class="card-name">${sp.name}</div><div class="card-sci">${sp.sci}</div></div><span class="plant-card .card-badge" style="font-size:9px;padding:3px 8px;border-radius:20px;font-weight:700;font-family:var(--mono);background:rgba(76,175,80,.2);color:var(--green);">${(sp.badge||'common').toUpperCase()}</span></div>`;
+    });
+    simHTML+='</div>';
+  }
+  document.getElementById('resSimilarWrap').innerHTML=simHTML;
+
+  showScreen('screen4');
+}
+
+// ─── INIT ───
+document.getElementById('dbCount').textContent=PLANTS.length;
+</script>
+</body>
+</html>

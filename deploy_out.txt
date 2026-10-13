@@ -1,0 +1,27 @@
+Vercel CLI 59.5.0 (Node.js 24.19.0)
+Loading teams…
+
+  Directory       ~\Documents\Default Project\aetherion-live
+
+Searching for existing projects…
+
+✓ Linked          cindyalexpios-projects/aetherion-live
+Deploying cindyalexpios-projects/aetherion-live
+Uploading [--------------------] (0.0B/4.3KB)
+Uploading [===================-] (4.2KB/4.3KB)
+Uploading [====================] (4.3KB/4.3KB)
+  Inspect         https://vercel.com/cindyalexpios-projects/aetherion-live/Gp2GVvfDHfoTme96iTLn8mFUJ6TD
+  Production      https://aetherion-live-gok90a59q-cindyalexpios-projects.vercel.app
+Building…
+{
+  "status": "error",
+  "reason": "deploy_failed",
+  "message": "Not authorized",
+  "next": [
+    {
+      "command": "vercel deploy",
+      "when": "retry deploy"
+    }
+  ]
+}
+Error: Not authorized

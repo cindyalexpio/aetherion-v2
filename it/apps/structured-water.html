@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Energizzatore di Acqua Strutturata · Archivio Aetherion</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Acqua Strutturata">
+<meta name="theme-color" content="#0a0e1a">
+<style>
+:root{--bg:#0a0e1a;--bg-deep:#060912;--panel:#121828;--panel-2:#0d1220;--border:#262f49;--border-soft:#1a2136;--text:#e9e5d8;--text-soft:#c9c6bc;--muted:#8b90a3;--dim:#5d6377;--gold:#d4af37;--gold-brite:#e6c15c;--gold-deep:#9a7b2e;--violet:#7c6cf0;--indigo:#4c5fd5;--teal:#2dd4bf;--serif:Georgia,"Palatino Linotype","Times New Roman",serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{background-color:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));background-image:radial-gradient(1px 1px at 22% 28%,rgba(212,175,55,.28) 0,transparent 100%),radial-gradient(1px 1px at 68% 18%,rgba(212,175,55,.22) 0,transparent 100%),radial-gradient(1.5px 1.5px at 42% 72%,rgba(124,108,240,.32) 0,transparent 100%),radial-gradient(1px 1px at 84% 62%,rgba(212,175,55,.18) 0,transparent 100%),radial-gradient(1px 1px at 12% 82%,rgba(124,108,240,.22) 0,transparent 100%),radial-gradient(1px 1px at 55% 45%,rgba(124,108,240,.16) 0,transparent 100%),radial-gradient(ellipse at 50% 0%,rgba(76,95,213,.14),transparent 55%),radial-gradient(ellipse at 50% 100%,rgba(212,175,55,.07),transparent 55%);background-attachment:fixed}
+.app-brand{text-align:center;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--dim);font-family:var(--mono);margin-bottom:16px}.app-brand .mark{color:var(--gold-deep);letter-spacing:0}
+.app-container{background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%);border:1px solid var(--border);border-radius:20px;padding:28px 22px 22px;width:100%;max-width:440px;min-height:572px;margin:auto;display:none;flex-direction:column;justify-content:space-between;position:relative;box-shadow:0 0 0 1px rgba(212,175,55,.07),0 25px 60px -12px rgba(0,0,0,.75),inset 0 1px 0 rgba(212,175,55,.06)}
+.app-container::before,.app-container::after{position:absolute;color:var(--gold-deep);font-size:12px;line-height:1}.app-container::before{content:"✦";top:10px;left:14px}.app-container::after{content:"✦";bottom:10px;right:14px}
+.emoji-header{text-align:center;font-size:32px;margin-bottom:10px}
+h1,h2{font-family:var(--serif);color:var(--gold-brite);text-align:center;font-weight:700;letter-spacing:.05em;margin-bottom:6px}h1{font-size:25px}h2{font-size:20px;text-transform:uppercase;letter-spacing:.14em}
+.subtitle{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:3px;text-align:center;margin-bottom:18px;font-family:var(--mono)}
+p{color:var(--text-soft);font-size:14px;line-height:1.65;margin-bottom:14px}
+.highlight-box{border-left:3px solid var(--gold);padding-left:12px;color:var(--muted);font-style:italic;font-size:13px;line-height:1.55;font-family:var(--serif)}
+button{background:linear-gradient(180deg,var(--gold-brite),var(--gold-deep));color:var(--bg);font-weight:800;border:none;border-radius:10px;padding:14px;width:100%;cursor:pointer;font-size:14px;letter-spacing:.06em;text-transform:uppercase;font-family:var(--serif);transition:all .2s ease;box-shadow:0 4px 18px rgba(212,175,55,.22);margin-top:12px}
+button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:active{transform:translateY(0)}
+button:disabled{background:#232945;color:var(--dim);cursor:not-allowed;box-shadow:none;filter:none;transform:none}
+.diagram-box{background-color:var(--bg-deep);border:1px solid var(--border-soft);border-radius:14px;padding:16px;margin-bottom:16px;font-size:11px;text-align:center}
+.layer-outer{border:1px dashed rgba(212,175,55,.4);background:rgba(212,175,55,.05);color:var(--gold-brite);padding:8px;border-radius:8px;letter-spacing:.04em}
+.layer-inner{border:1px dashed var(--dim);background-color:var(--bg);color:var(--muted);padding:8px;margin-top:6px;border-radius:6px}
+.layer-core{background-color:var(--panel);border:1px solid var(--border);color:var(--text);padding:6px;margin-top:6px;font-family:var(--mono);font-size:10px;border-radius:4px}
+.checkbox-container{display:flex;align-items:center;background-color:rgba(6,9,18,.6);padding:12px;border-radius:12px;border:1px solid var(--border-soft);cursor:pointer;margin-bottom:12px}
+.checkbox-container input{width:18px;height:18px;margin-right:12px;cursor:pointer;accent-color:var(--gold)}.checkbox-container span{font-size:12px;color:var(--text-soft);line-height:1.4}
+.input-group{margin-bottom:16px}
+.slider-header{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:6px;color:var(--text);letter-spacing:.03em}.slider-header .value{color:var(--gold-brite);font-family:var(--mono);font-size:13px}
+input[type="range"]{width:100%;height:6px;background:var(--bg-deep);border-radius:4px;outline:none;-webkit-appearance:none;appearance:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--gold-brite),var(--gold-deep));cursor:pointer;box-shadow:0 0 10px rgba(212,175,55,.45)}
+input[type="range"]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--gold-brite),var(--gold-deep));cursor:pointer}
+.slider-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+.grid-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.grid-inputs label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;font-weight:700;font-family:var(--mono)}
+.grid-inputs input{width:100%;background-color:var(--bg-deep);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--gold-brite);font-family:var(--mono);font-size:14px}
+.grid-inputs input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px rgba(212,175,55,.25)}
+.dashboard-panel{background-color:var(--bg-deep);border:1px solid var(--border-soft);border-radius:14px;padding:16px;margin-bottom:12px;position:relative}
+.panel-title{text-align:center;font-size:10px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid rgba(212,175,55,.2);padding-bottom:8px;margin-bottom:12px;font-family:var(--mono)}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:center;margin-bottom:16px}
+.result-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;font-family:var(--mono)}
+.result-value{font-size:23px;font-weight:800;font-family:var(--mono);color:var(--gold-brite);margin-top:4px;text-shadow:0 0 18px rgba(212,175,55,.25)}
+.result-sub{font-size:10px;color:var(--dim);margin-top:2px}
+.panel-footer{border-top:1px solid var(--border-soft);padding-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-soft)}
+.panel-footer .highlight{color:var(--gold-brite);font-weight:800;font-family:var(--mono);font-size:16px}
+.layman-card{background:rgba(212,175,55,.06);border:1px solid rgba(212,175,55,.25);border-radius:12px;padding:14px;margin-bottom:12px}
+.layman-card h3{color:var(--gold-brite);font-size:13px;font-family:var(--serif);margin-bottom:6px;letter-spacing:.04em}
+.layman-card p{color:var(--text-soft);font-size:13px;margin-bottom:0;line-height:1.55}
+.back-link{display:block;text-align:center;color:var(--dim);font-size:12px;margin-top:10px;cursor:pointer;text-decoration:underline;font-family:var(--mono);text-transform:uppercase;letter-spacing:1px}
+.back-link:hover{color:var(--gold)}
+.notes-intro{background:rgba(212,175,55,.06);border:1px solid rgba(212,175,55,.25);border-radius:12px;padding:14px;margin-bottom:16px;font-size:13px;line-height:1.62;color:var(--text-soft)}
+.notes-intro b{color:var(--gold-brite);font-weight:800}
+.notes-table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:12px}
+.notes-table th{font-family:var(--serif);color:var(--gold-brite);text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid rgba(212,175,55,.35)}
+.notes-table td{padding:8px 10px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.5;color:var(--text-soft)}
+.notes-table td:first-child{color:var(--gold-brite);font-family:var(--mono);font-size:11px;white-space:nowrap;font-weight:700}
+.notes-table tr:last-child td{border-bottom:none}
+.notes-section{font-size:10px;color:var(--gold-deep);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin:18px 0 10px;font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div id="screen1" class="app-container" style="display:flex;">
+  <div>
+    <div class="app-brand"><span class="mark">✧</span> &nbsp;AETHERION · CODEX VORTEX&nbsp; <span class="mark">✧</span></div>
+    <div class="emoji-header">🌀</div>
+    <h1>Energizzatore di Acqua Strutturata</h1>
+    <div class="subtitle">Archivio di Risonanza Idro-Geometrica</div>
+    <p>L'acqua è un cristallo liquido — le sue molecole formano grappoli geometrici transitori che rispondono a movimento, forma e campo. Alcuni ricercatori proposero che il flusso a vortice strutturato e la geometria sacra potessero "ri-energizzare" l'acqua stagnante.</p>
+    <p>Guidando l'acqua attraverso un vortice ad angolo preciso all'interno di una camera a forma geometrica, sostiene la teoria, i grappoli molecolari disordinati vengono riorganizzati in un reticolo esagonale che ricorda l'acqua di sorgente di montagna.</p>
+    <p class="highlight-box">Questo sandbox simula le variabili di energizzazione: velocità del vortice, geometria della camera, tempo di esposizione e l'equilibrio iniziale dell'acqua.</p>
+  </div>
+  <div>
+    <button id="btnGotoScreen2">Tocca per Iniziare la Calibrazione</button>
+    <span class="back-link" style="margin-top:14px;" id="lnkHome">← Torna all'Archivio</span>
+    <span class="back-link" style="margin-top:8px;" id="lnkNotice" onclick="showScreen('screen5')">📎 Avviso dell'Archivio</span>
+    <span class="back-link" style="margin-top:8px;" id="lnkNotes" onclick="showScreen('screen6')">📖 Note di Campo · Guida ai Parametri</span>
+    <div style="text-align:center;font-size:9px;color:var(--dim);font-family:var(--mono);letter-spacing:1px;margin-top:14px;line-height:1.6;">— Pio Esposito · Tutti i diritti riservati © 2026 —</div>
+  </div>
+</div>
+
+<div id="screen2" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📋</div>
+    <h2>La Camera a Vortice</h2>
+    <div class="subtitle">Ricristallizzazione Geometrica</div>
+    <div class="diagram-box">
+      <div class="layer-outer">
+        Cono di Ingresso :: Velocità del Vortice
+        <div class="layer-inner">
+          Geometria Esagonale della Camera
+          <div class="layer-core">[ Recipiente d'Acqua da 5 Gal ]</div>
+        </div>
+      </div>
+    </div>
+    <p>L'acqua entra tangenzialmente, spirando verso l'interno a velocità crescente. Le pareti della camera sono sfaccettate in esagoni ripetuti — la geometria che i cristalli di ghiaccio dell'acqua stessa dimostrano — per "imprimere" ordine nel liquido.</p>
+    <p class="highlight-box">Vortice più veloce = più ordinamento molecolare. Più punti di geometria = impronta più forte. Esposizione più lunga = ristrutturazione più profonda.</p>
+  </div>
+  <button id="btnGotoScreen3">Configura la Camera</button>
+</div>
+
+<div id="screen3" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">⚙️</div>
+    <h2>Parametri della Camera</h2>
+    <div class="subtitle">Imposta le Variabili di Energizzazione</div>
+    <div class="input-group">
+      <div class="slider-header">Velocità del Vortice <span class="value" id="valRPM">1200 RPM</span></div>
+      <input type="range" id="inpRPM" min="0" max="3000" value="1200" step="50">
+      <div class="slider-labels"><span>0</span><span>3000</span></div>
+    </div>
+    <div class="input-group">
+      <div class="slider-header">Punti di Geometria <span class="value" id="valGeo">6 pts</span></div>
+      <input type="range" id="inpGeo" min="1" max="8" value="6" step="1">
+      <div class="slider-labels"><span>1</span><span>8</span></div>
+    </div>
+    <div class="input-group">
+      <div class="slider-header">Tempo di Esposizione <span class="value" id="valHours">24 ore</span></div>
+      <input type="range" id="inpHours" min="1" max="72" value="24" step="1">
+      <div class="slider-labels"><span>1h</span><span>72h</span></div>
+    </div>
+    <div class="input-group">
+      <div class="slider-header">pH Iniziale <span class="value" id="valPH">7.0</span></div>
+      <input type="range" id="inpPH" min="5" max="9" value="7" step="0.1">
+      <div class="slider-labels"><span>5</span><span>9</span></div>
+    </div>
+    <div class="grid-inputs">
+      <div>
+        <label>Volume d'Acqua</label>
+        <input type="number" id="inpVolume" value="5" min="1" max="55">
+      </div>
+    </div>
+    <div class="checkbox-container" id="chkAgreeBox">
+      <input type="checkbox" id="chkAgree">
+      <span>Sono consapevole che questa è una simulazione educativa di ipotesi storiche sull'energizzazione dell'acqua, non una scienza verificata.</span>
+    </div>
+  </div>
+  <button id="btnCalculate" disabled>Avvia Energizzazione</button>
+</div>
+
+<div id="screen4" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📊</div>
+    <h2>Risultati dell'Energizzazione</h2>
+    <div class="subtitle">Struttura Molecolare Prevista</div>
+    <div class="dashboard-panel">
+      <div class="panel-title">Metriche Principali</div>
+      <div class="results-grid">
+        <div>
+          <div class="result-label">Indice di Struttura</div>
+          <div class="result-value" id="resStruct">—</div>
+          <div class="result-sub">ordine esagonale</div>
+        </div>
+        <div>
+          <div class="result-label">Dimensione dei Cluster</div>
+          <div class="result-value" id="resCluster">—</div>
+          <div class="result-sub">raggruppamento molecolare</div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span>Risposta di Idratazione</span>
+        <span class="highlight" id="resHydration">—</span>
+      </div>
+    </div>
+    <div class="dashboard-panel">
+      <div class="panel-title">Metriche di Equilibrio</div>
+      <div class="results-grid">
+        <div>
+          <div class="result-label">Variazione di pH</div>
+          <div class="result-value" id="resPH">—</div>
+          <div class="result-sub">verso la neutralità</div>
+        </div>
+        <div>
+          <div class="result-label">Energia Vitale</div>
+          <div class="result-value" id="resEnergy">—</div>
+          <div class="result-sub">potenziale immagazzinato</div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span>Qualità del Lotto</span>
+        <span class="highlight" id="resGrade">—</span>
+      </div>
+    </div>
+    <div class="layman-card">
+      <h3>🧠 In Parole Semplici</h3>
+      <p id="laymanText">Avvia il ciclo di energizzazione per vedere la proiezione.</p>
+    </div>
+  </div>
+  <div>
+    <button id="btnRestart">Avvia Un Altro Ciclo</button>
+    <span class="back-link" style="margin-top:14px;" id="lnkBack">← Torna ai Parametri</span>
+  </div>
+</div>
+
+<!-- SCREEN 6: Field Notes -->
+<div id="screen6" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📖</div>
+    <h2>Note di Campo</h2>
+    <div class="subtitle">Guida dello Sviluppatore a Questo Simulatore</div>
+    <div class="notes-intro"><b>A cosa serve:</b> un sandbox da mood-board attorno alla pretesa preferita del folklore sulla salute alternativa — che mescolare l'acqua in un certo modo riorganizzi le sue molecole in configurazioni più belle e più "utili". Ti lascia giocare con come potrebbe apparire quella presunta trasformazione e il suo prezzo.</div>
+    <div class="notes-section">Comprendere i parametri</div>
+    <table class="notes-table">
+      <tr><th>Parametro</th><th>Cosa significa</th></tr>
+      <tr><td>Velocità del Vortice</td><td>Quanto velocemente l'acqua viene fatta roteare nella camera, in RPM. Il folklore dice che un vortice forte "ordina" le molecole.</td></tr>
+      <tr><td>Punti di Geometria</td><td>Quanti lati ha la forma interna della camera — da un semplice cerchio fino a un ottagono. Più punti presumibilmente significano una finitura più cristallina.</td></tr>
+      <tr><td>Tempo di Esposizione</td><td>Per quanto tempo viene lavorato il lotto, in ore.</td></tr>
+      <tr><td>pH Iniziale</td><td>L'equilibrio acido/alcalino dell'acqua prima del trattamento (7.0 = neutro). Il folklore sostiene che il trattamento la spinga verso la neutralità.</td></tr>
+      <tr><td>Volume d'Acqua</td><td>Quanti galloni vengono lavorati. Ridimensiona la cifra finale dell'energia, non la chimica.</td></tr>
+    </table>
+    <div class="notes-section">Leggere i risultati</div>
+    <table class="notes-table">
+      <tr><th>Risultato</th><th>Come leggerlo</th></tr>
+      <tr><td>Indice di Struttura</td><td>Il punteggio fittizio di "ordine esagonale" — quanto dell'acqua si presume sia organizzata in esagoni.</td></tr>
+      <tr><td>Dimensione dei Cluster</td><td>La dimensione tipica dei raggruppamenti che si immagina le molecole d'acqua formino dopo il trattamento.</td></tr>
+      <tr><td>Risposta di Idratazione</td><td>Un descrittore colorito di quanto "facile" si dice che sia bere quell'acqua fittizia.</td></tr>
+      <tr><td>Variazione di pH</td><td>Quanto il lotto si è spostato verso il neutro, in punti di pH.</td></tr>
+      <tr><td>Energia Vitale</td><td>Il "potenziale immagazzinato" fittizio che porta il lotto, ridimensionato dal volume lavorato.</td></tr>
+      <tr><td>Qualità del Lotto</td><td>Un verdetto a lettere sulle tue impostazioni.</td></tr>
+    </table>
+    <p class="highlight-box">Ogni numero su questa schermata è finzione. Nessuna acqua viene realmente alterata da tutto questo.</p>
+  </div>
+  <button onclick="showScreen('screen1')">Torna all'Esplorazione</button>
+</div>
+
+<!-- SCREEN 5: Archive Notice -->
+<div id="screen5" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📜</div>
+    <h2>Avviso dell'Archivio</h2>
+    <div class="subtitle">Narrativa Interattiva · Intrattenimento</div>
+    <p>Questa app è un'opera di narrativa interattiva della serie Archivio di Ricerca Aetherion — un tributo giocoso alla storia della scienza di frontiera.</p>
+    <p>Non avanza alcuna pretesa scientifica, e nessun dispositivo o effetto qui rappresentato è reale o funzionante. Le simulazioni sono calcoli fittizi a scopo di puro intrattenimento. Non affidarti a esse per nulla.</p>
+    <p class="highlight-box">Nessun effetto reale è rivendicato, implicato o possibile.</p>
+    <p>© 2026 Pio Esposito — Tutti i diritti riservati. Versione 1.0.</p>
+  </div>
+  <button onclick="showScreen('screen1')">Torna all'Archivio</button>
+</div>
+
+<script>
+function goHome(){
+  // Hub lives one level up when an app is inside /apps/
+  const p=location.pathname;
+  window.location.href=(p.includes('/apps/'))?'../index.html':'index.html';
+}
+// Archive escape hatch: return link on every non-intro screen
+document.querySelectorAll('.app-container').forEach(c=>{
+  if(c.id==='screen1')return;
+  const nav=document.createElement('span');
+  nav.className='back-link';
+  nav.style.marginTop='10px';
+  nav.textContent="← Torna all'Archivio";
+  nav.onclick=goHome;
+  c.appendChild(nav);
+});
+function showScreen(id){document.querySelectorAll('.app-container').forEach(el=>el.style.display='none');document.getElementById(id).style.display='flex';}
+document.getElementById('btnGotoScreen2').addEventListener('click',()=>showScreen('screen2'));
+document.getElementById('btnGotoScreen3').addEventListener('click',()=>showScreen('screen3'));
+document.getElementById('lnkHome').addEventListener('click',goHome);
+
+const sliders=[
+ {id:'inpRPM',out:'valRPM',suffix:' RPM'},
+ {id:'inpGeo',out:'valGeo',suffix:' pts'},
+ {id:'inpHours',out:'valHours',suffix:' ore'},
+ {id:'inpPH',out:'valPH',suffix:''}
+];
+sliders.forEach(s=>{const el=document.getElementById(s.id);const out=document.getElementById(s.out);el.addEventListener('input',()=>{let v=el.value;if(s.id==='inpPH')v=parseFloat(v).toFixed(1);out.textContent=v+s.suffix;});});
+
+const chkAgree=document.getElementById('chkAgree');
+const btnCalc=document.getElementById('btnCalculate');
+chkAgree.addEventListener('change',()=>{btnCalc.disabled=!chkAgree.checked;});
+document.getElementById('chkAgreeBox').addEventListener('click',(e)=>{if(e.target.tagName!=='INPUT'){chkAgree.checked=!chkAgree.checked;btnCalc.disabled=!chkAgree.checked;}});
+
+btnCalc.addEventListener('click',()=>{
+  const rpm=parseInt(document.getElementById('inpRPM').value,10);
+  const geo=parseInt(document.getElementById('inpGeo').value,10);
+  const hours=parseInt(document.getElementById('inpHours').value,10);
+  const ph=parseFloat(document.getElementById('inpPH').value);
+  const volume=parseFloat(document.getElementById('inpVolume').value)||5;
+
+  // Molecular ordering model (fictional, internally consistent)
+  const structure=Math.max(5,Math.min(98,
+    (rpm/3000)*42 + (geo/8)*38 + Math.sqrt(hours)*4 + ((ph-7.0)*2)));
+  const structureInt=Math.round(structure);
+
+  const cluster=Math.max(20,Math.round(320-(structure*2.8)));
+  const hydration=Math.round(structure*0.9);
+  const phShift=((7.0-ph)*0.5);
+  const energy=Math.round(structure*0.18);
+  const grade=structureInt>=85?'CRISTALLINO':(structureInt>=60?'STRUTTURATO':(structureInt>=35?'PARZIALE':'DISORGANIZZATO'));
+
+  document.getElementById('resStruct').textContent=structureInt+'%';
+  document.getElementById('resCluster').textContent=cluster+' nm';
+  document.getElementById('resHydration').textContent=hydration+'%';
+  document.getElementById('resPH').textContent=(phShift===0?'0.0':(phShift>0?'-':'+')+Math.abs(phShift).toFixed(1));
+  document.getElementById('resEnergy').textContent=energy+' kcal/L';
+  document.getElementById('resGrade').textContent=grade;
+  document.getElementById('resGrade').style.color=structureInt>=85?'#2dd4bf':(structureInt>=60?'#e6c15c':'#b33');
+
+  let plain='';
+  if(structureInt<35){plain='L\'acqua è appena cambiata. Vortice lento, geometria debole ed esposizione breve hanno lasciato i cluster per lo più disordinati — statisticamente indistinguibili dall\'acqua del rubinetto in questo modello.';
+  }else if(structureInt<60){plain=`Strutturazione parziale. Circa ${structureInt}% del lotto mostra un ordinamento esagonale, con cluster ridotti a ${cluster} nm. Secondo la finzione, noteresti un "sapore" marginalmente più morbido.`;
+  }else if(structureInt<85){plain=`Un lotto ben strutturato. Con un ordinamento del ${structureInt}%, la maggior parte dei tuoi ${volume} galloni ora si presenta come un reticolo coerente. Risposta di idratazione ${hydration}% — l\'acqua "sembra" viva, come direbbe la teoria.`;
+  }else{plain=`Eccezionalmente strutturato. ${structureInt}% di ordine esagonale, cluster di appena ${cluster} nm e ${energy} kcal/L di potenziale immagazzinato. La firma ideale dell\'acqua sorgiva secondo la finzione, prodotta su richiesta.`;}
+  document.getElementById('laymanText').textContent=plain;
+
+  showScreen('screen4');
+});
+
+document.getElementById('btnRestart').addEventListener('click',()=>{
+  document.getElementById('inpRPM').value=1200;document.getElementById('valRPM').textContent='1200 RPM';
+  document.getElementById('inpGeo').value=6;document.getElementById('valGeo').textContent='6 pts';
+  document.getElementById('inpHours').value=24;document.getElementById('valHours').textContent='24 ore';
+  document.getElementById('inpPH').value=7;document.getElementById('valPH').textContent='7.0';
+  document.getElementById('inpVolume').value=5;
+  document.getElementById('chkAgree').checked=false;btnCalc.disabled=true;
+  showScreen('screen1');
+});
+document.getElementById('lnkBack').addEventListener('click',()=>showScreen('screen3'));
+</script>
+</body>
+</html>

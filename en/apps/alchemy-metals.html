@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Planetary Metals Table · Aetherion Archive</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Alchemy Metals">
+<meta name="theme-color" content="#0a0e1a">
+<style>
+:root{--bg:#0a0e1a;--bg-deep:#060912;--panel:#121828;--panel-2:#0d1220;--border:#262f49;--border-soft:#1a2136;--text:#e9e5d8;--text-soft:#c9c6bc;--muted:#8b90a3;--dim:#5d6377;--gold:#d4af37;--gold-brite:#e6c15c;--gold-deep:#9a7b2e;--violet:#7c6cf0;--indigo:#4c5fd5;--teal:#2dd4bf;--serif:Georgia,"Palatino Linotype","Times New Roman",serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{background-color:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));background-image:radial-gradient(1px 1px at 22% 28%,rgba(212,175,55,.28) 0,transparent 100%),radial-gradient(1px 1px at 68% 18%,rgba(212,175,55,.22) 0,transparent 100%),radial-gradient(1.5px 1.5px at 42% 72%,rgba(124,108,240,.32) 0,transparent 100%),radial-gradient(1px 1px at 84% 62%,rgba(212,175,55,.18) 0,transparent 100%),radial-gradient(1px 1px at 12% 82%,rgba(124,108,240,.22) 0,transparent 100%),radial-gradient(1px 1px at 55% 45%,rgba(124,108,240,.16) 0,transparent 100%),radial-gradient(ellipse at 50% 0%,rgba(76,95,213,.14),transparent 55%),radial-gradient(ellipse at 50% 100%,rgba(212,175,55,.07),transparent 55%);background-attachment:fixed}
+.app-brand{text-align:center;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--dim);font-family:var(--mono);margin-bottom:16px}.app-brand .mark{color:var(--gold-deep);letter-spacing:0}
+.app-container{background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%);border:1px solid var(--border);border-radius:20px;padding:28px 22px 22px;width:100%;max-width:440px;min-height:572px;margin:auto;display:none;flex-direction:column;justify-content:space-between;position:relative;box-shadow:0 0 0 1px rgba(212,175,55,.07),0 25px 60px -12px rgba(0,0,0,.75),inset 0 1px 0 rgba(212,175,55,.06)}
+.app-container::before,.app-container::after{position:absolute;color:var(--gold-deep);font-size:12px;line-height:1}.app-container::before{content:"✦";top:10px;left:14px}.app-container::after{content:"✦";bottom:10px;right:14px}
+.emoji-header{text-align:center;font-size:32px;margin-bottom:10px}
+h1,h2{font-family:var(--serif);color:var(--gold-brite);text-align:center;font-weight:700;letter-spacing:.05em;margin-bottom:6px}h1{font-size:25px}h2{font-size:20px;text-transform:uppercase;letter-spacing:.14em}
+.subtitle{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:3px;text-align:center;margin-bottom:18px;font-family:var(--mono)}
+p{color:var(--text-soft);font-size:14px;line-height:1.65;margin-bottom:14px}
+.highlight-box{border-left:3px solid var(--gold);padding-left:12px;color:var(--muted);font-style:italic;font-size:13px;line-height:1.55;font-family:var(--serif)}
+button{background:linear-gradient(180deg,var(--gold-brite),var(--gold-deep));color:var(--bg);font-weight:800;border:none;border-radius:10px;padding:14px;width:100%;cursor:pointer;font-size:14px;letter-spacing:.06em;text-transform:uppercase;font-family:var(--serif);transition:all .2s ease;box-shadow:0 4px 18px rgba(212,175,55,.22);margin-top:12px}
+button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:active{transform:translateY(0)}
+button:disabled{background:#232945;color:var(--dim);cursor:not-allowed;box-shadow:none;filter:none;transform:none}
+button.secondary{background:linear-gradient(180deg,#2a3554,#1a2136);color:var(--gold-brite);border:1px solid rgba(212,175,55,.35);box-shadow:0 4px 18px rgba(212,175,55,.08)}
+button.secondary:hover{filter:brightness(1.15)}
+.diagram-box{background-color:var(--bg-deep);border:1px solid var(--border-soft);border-radius:14px;padding:16px;margin-bottom:16px;font-size:11px;text-align:center}
+.layer-outer{border:1px dashed rgba(212,175,55,.4);background:rgba(212,175,55,.05);color:var(--gold-brite);padding:8px;border-radius:8px;letter-spacing:.04em}
+.layer-inner{border:1px dashed var(--dim);background-color:var(--bg);color:var(--muted);padding:8px;margin-top:6px;border-radius:6px}
+.layer-core{background-color:var(--panel);border:1px solid var(--border);color:var(--text);padding:6px;margin-top:6px;font-family:var(--mono);font-size:10px;border-radius:4px}
+.checkbox-container{display:flex;align-items:center;background-color:rgba(6,9,18,.6);padding:12px;border-radius:12px;border:1px solid var(--border-soft);cursor:pointer;margin-bottom:12px}
+.checkbox-container input{width:18px;height:18px;margin-right:12px;cursor:pointer;accent-color:var(--gold)}.checkbox-container span{font-size:12px;color:var(--text-soft);line-height:1.4}
+.input-group{margin-bottom:16px}
+.slider-header{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:6px;color:var(--text);letter-spacing:.03em}.slider-header .value{color:var(--gold-brite);font-family:var(--mono);font-size:13px}
+.slider-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+.grid-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.grid-inputs label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;font-weight:700;font-family:var(--mono)}
+.grid-inputs input{width:100%;background-color:var(--bg-deep);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--gold-brite);font-family:var(--mono);font-size:14px}
+.grid-inputs input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 1px rgba(212,175,55,.25)}
+.dashboard-panel{background-color:var(--bg-deep);border:1px solid var(--border-soft);border-radius:14px;padding:16px;margin-bottom:12px;position:relative}
+.panel-title{text-align:center;font-size:10px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid rgba(212,175,55,.2);padding-bottom:8px;margin-bottom:12px;font-family:var(--mono)}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:center;margin-bottom:16px}
+.result-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;font-family:var(--mono)}
+.result-value{font-size:23px;font-weight:800;font-family:var(--mono);color:var(--gold-brite);margin-top:4px;text-shadow:0 0 18px rgba(212,175,55,.25)}
+.result-value.small{font-size:19px}
+.result-sub{font-size:10px;color:var(--dim);margin-top:2px}
+.panel-footer{border-top:1px solid var(--border-soft);padding-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-soft)}
+.panel-footer .highlight{color:var(--gold-brite);font-weight:800;font-family:var(--mono);font-size:16px}
+.layman-card{background:rgba(212,175,55,.06);border:1px solid rgba(212,175,55,.25);border-radius:12px;padding:14px;margin-bottom:12px}
+.layman-card h3{color:var(--gold-brite);font-size:13px;font-family:var(--serif);margin-bottom:6px;letter-spacing:.04em}
+.layman-card p{color:var(--text-soft);font-size:13px;margin-bottom:0;line-height:1.55}
+.back-link{display:block;text-align:center;color:var(--dim);font-size:12px;margin-top:10px;cursor:pointer;text-decoration:underline;font-family:var(--mono);text-transform:uppercase;letter-spacing:1px}
+.back-link:hover{color:var(--gold)}
+.notes-intro{background:rgba(212,175,55,.06);border:1px solid rgba(212,175,55,.25);border-radius:12px;padding:14px;margin-bottom:16px;font-size:13px;line-height:1.62;color:var(--text-soft)}
+.notes-intro b{color:var(--gold-brite);font-weight:800}
+.notes-table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:12px}
+.notes-table th{font-family:var(--serif);color:var(--gold-brite);text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid rgba(212,175,55,.35)}
+.notes-table td{padding:8px 10px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.5;color:var(--text-soft)}
+.notes-table td:first-child{color:var(--gold-brite);font-family:var(--mono);font-size:11px;white-space:nowrap;font-weight:700}
+.notes-table tr:last-child td{border-bottom:none}
+.notes-section{font-size:10px;color:var(--gold-deep);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin:18px 0 10px;font-family:var(--mono)}
+.sweep-list{max-height:430px;overflow-y:auto;border:1px solid var(--border-soft);border-radius:12px;background-color:var(--panel-2);margin-bottom:12px}
+.sweep-row{display:grid;grid-template-columns:2.4fr 1fr .8fr 1.1fr;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border-soft);align-items:center;font-size:10.5px;font-family:var(--mono);color:var(--text-soft)}
+.sweep-row:last-child{border-bottom:none}
+.sweep-row.head{color:var(--dim);text-transform:uppercase;letter-spacing:1px;font-size:9px;background-color:rgba(6,9,18,.6);position:sticky;top:0;z-index:1}
+.sweep-row .nm{color:var(--gold-brite);font-weight:700;font-family:var(--serif);font-size:12px}
+.sweep-row .aud{color:var(--gold-brite);font-weight:800}
+.sweep-row .tr{color:var(--muted)}
+.sweep-row .ok{color:var(--teal)}
+/* --- Aetherion: Planetary Metals additions --- */
+.metal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+button.metal-btn,button.metal-btn:hover,button.metal-btn:active{background:var(--panel);color:var(--muted);border:1px solid var(--border-soft);box-shadow:none;filter:none;transform:none;border-radius:10px;padding:10px 10px;margin-top:0;font-size:10px;letter-spacing:1px;font-family:var(--mono);text-transform:uppercase;font-weight:700;cursor:pointer;transition:all .15s ease;text-align:left;display:flex;justify-content:space-between;align-items:center}
+button.metal-btn .msy{color:var(--gold);font-size:12px;letter-spacing:0}
+button.metal-btn.active{color:var(--gold-brite);border-color:rgba(212,175,55,.5);background:rgba(212,175,55,.1)}
+button.metal-btn:disabled{background:var(--panel);color:var(--dim);cursor:not-allowed;border-color:var(--border-soft)}
+.stage-tag{display:inline-block;background:rgba(230,193,92,.14);border:1px solid rgba(230,193,92,.45);color:var(--gold-brite);border-radius:999px;padding:4px 12px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800;box-shadow:0 0 14px rgba(230,193,92,.12)}
+.stage-wrap{text-align:center;margin-top:10px}
+.sweep-row.five{grid-template-columns:1.5fr 1fr 1.3fr 1.5fr 1.5fr}
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1: Intro -->
+<div id="screen1" class="app-container" style="display:flex;">
+  <div>
+    <div class="app-brand"><span class="mark">✧</span> &nbsp;AETHERION · TABULA METALLORUM&nbsp; <span class="mark">✧</span></div>
+    <div class="emoji-header">⚗️</div>
+    <h1>Planetary Metals Table</h1>
+    <div class="subtitle">The Seven Metals of the Ancients</div>
+    <p>Seven metals, seven wandering stars, seven days of the week — the alchemists of the old Archive read the whole cosmos as one ledger. Lead bowed to Saturn, gold answered the Sun, and between them stretched a ladder of correspondences reaching from the forge-floor to the fixed stars.</p>
+    <p>The chamber keeps a copy of that ledger. Each metal keeps a planet, a day, a guardian, a region of the body and a stage upon the Work. Unfold one and the correspondence is laid out — as though the sky itself had signed its worth in ore.</p>
+    <p class="highlight-box">Pick a metal and the chamber unfolds its planetary dossier — today's weekday is only one of seven turns of the old wheel.</p>
+  </div>
+  <div>
+    <button id="btnGotoScreen2">Open the Ledger</button>
+    <span class="back-link" style="margin-top:14px;" id="lnkHome">← Return to Archive</span>
+    <span class="back-link" style="margin-top:8px;" id="lnkNotice" onclick="showScreen('screen5')">📎 Archive Notice</span>
+    <span class="back-link" style="margin-top:8px;" id="lnkNotes" onclick="showScreen('screen6')">📖 Field Notes · Guide to the Table</span>
+    <div style="text-align:center;font-size:9px;color:var(--dim);font-family:var(--mono);letter-spacing:1px;margin-top:14px;line-height:1.6;">— Pio Esposito · All Rights Reserved © 2026 —</div>
+  </div>
+</div>
+
+<!-- SCREEN 2: The Principle -->
+<div id="screen2" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">🧭</div>
+    <h2>Celestial Correspondence</h2>
+    <div class="subtitle">As Above, So Below</div>
+    <div class="diagram-box">
+      <div class="layer-outer">
+        The Metals Below — Earth, heavy, patient
+        <div class="layer-inner">
+          The Seven Stars Above — their wandering lords
+          <div class="layer-core">[ As above, so below ]</div>
+        </div>
+      </div>
+    </div>
+    <p>Every metal below wears the seal of a star above. The glow that the sky keeps for a planet, the ore keeps for its master — the same signature twice-written, once in light and once in metal. Time itself is bound into the pattern: each star claims a day, and each day claims a metal, so the whole week is a single slow turn of the Work.</p>
+    <p class="highlight-box">The correspondence is the spine of the archive's alchemy — nothing in the old ledger stands alone, and nothing in the sky is without its earthly echo.</p>
+  </div>
+  <button id="btnGotoScreen3">Open the Ledger</button>
+</div>
+
+<!-- SCREEN 3: The Ledger -->
+<div id="screen3" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📜</div>
+    <h2>The Ledger</h2>
+    <div class="subtitle">Seven Metals · Seven Stars</div>
+    <div class="checkbox-container" id="chkAgreeBox">
+      <input type="checkbox" id="chkAgree">
+      <span>I understand this is an educational simulation of a fictional correspondence, not verified astronomy or chemistry.</span>
+    </div>
+    <div class="metal-grid" id="metalButtons"></div>
+    <div class="dashboard-panel" id="dashPanel" style="display:none;">
+      <div class="panel-title">Planetary Dossier</div>
+      <div class="results-grid">
+        <div>
+          <div class="result-label">Metal</div>
+          <div class="result-value small" id="rMetal">—</div>
+          <div class="result-sub" id="rDay">—</div>
+        </div>
+        <div>
+          <div class="result-label">Element</div>
+          <div class="result-value small" id="rEl">—</div>
+          <div class="result-sub">modern symbol</div>
+        </div>
+        <div>
+          <div class="result-label">Body</div>
+          <div class="result-value small" id="rBody">—</div>
+          <div class="result-sub">correspondence</div>
+        </div>
+        <div>
+          <div class="result-label">Attribute</div>
+          <div class="result-value small" id="rAttr">—</div>
+          <div class="result-sub">worthiness</div>
+        </div>
+        <div>
+          <div class="result-label">Guardian</div>
+          <div class="result-value small" id="rGuard">—</div>
+          <div class="result-sub">classical figure</div>
+        </div>
+        <div>
+          <div class="result-label">Work Stage</div>
+          <div class="result-value small" id="rStage">—</div>
+          <div class="result-sub">stage of the art</div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span id="rPlanet">—</span>
+        <span class="highlight" id="rGlyph">—</span>
+      </div>
+      <div class="layman-card">
+        <h3>📜 In the Ledger</h3>
+        <p id="rLore">Select a metal to unfold its planetary dossier.</p>
+      </div>
+      <div class="slider-header">Work of the Art <span class="value" id="sliderVal">0 / 100</span></div>
+      <input type="range" id="workSlider" min="0" max="100" step="1" value="0" style="width:100%;accent-color:var(--gold);">
+      <div class="slider-labels"><span>beginning</span><span>completion</span></div>
+      <div class="stage-wrap"><span class="stage-tag" id="stageTag">First Work</span></div>
+    </div>
+  </div>
+  <div>
+    <button id="btnGotoSweep" class="secondary">📜 View the Full Ledger</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: Full Ledger -->
+<div id="screen4" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">🗂️</div>
+    <h2>The Full Ledger</h2>
+    <div class="subtitle">All Seven Metals · One Table</div>
+    <div class="sweep-note">The seven metals in order of the week, each bound to its star, its day, its region of the body and its stage upon the Work. The week is the wheel; the wheel is the Work.</div>
+    <div class="sweep-list" id="sweepList"></div>
+    <p class="highlight-box">Metals, planets and weekdays are arranged after the archive's copy of an Hermetic ledger — every correspondence is fiction.</p>
+  </div>
+  <div>
+    <button onclick="showScreen('screen3')">Back to the Ledger</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: Archive Notice -->
+<div id="screen5" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📜</div>
+    <h2>Archive Notice</h2>
+    <div class="subtitle">Interactive Fiction · Entertainment</div>
+    <p>This app is a work of interactive fiction in the Aetherion Research Archive series — a playful tribute to the fringe-science and alchemical history it imitates.</p>
+    <p>It makes no scientific or astronomical claims, and no metal, star or transmutation described here is real, functional, or wrought by the hand of any planet. The correspondences are fictional arrangements for entertainment only. Do not rely on them for anything.</p>
+    <p class="highlight-box">No real-world effect is claimed, implied, or possible.</p>
+    <p>© 2026 Pio Esposito — All Rights Reserved. Version 1.0.</p>
+  </div>
+  <button onclick="showScreen('screen1')">Return to the Archive</button>
+</div>
+
+<!-- SCREEN 6: Field Notes -->
+<div id="screen6" class="app-container" style="display:none;">
+  <div>
+    <div class="emoji-header">📖</div>
+    <h2>Field Notes</h2>
+    <div class="subtitle">Guide to the Planetary Ledger</div>
+    <div class="notes-intro"><b>What this was built for:</b> a tidy way to hold the classical alchemical correspondence of the seven planetary metals — the idea that each earthy metal answers to one wandering star, one day of the week, one guardian and one region of the body. The table reproduces the archive's copy of an Hermetic ledger, one row per metal, as interactive fiction you can poke at with a thumb.</div>
+    <div class="notes-section">The sevenfold correspondence</div>
+    <table class="notes-table">
+      <tr><th>Column</th><th>How to read it</th></tr>
+      <tr><td>Metal</td><td>The earthly body of the correspondence — Lead to Gold, the ladder the alchemists climbed one rung at a time.</td></tr>
+      <tr><td>Planet / Day</td><td>Each metal answers to a wandering star and claims that star's weekday: Saturn's Saturday, Luna's Monday, Sol's Sunday, and the rest of the week's one slow turn.</td></tr>
+      <tr><td>Body</td><td>The part of the human frame the alchemists bound to each metal — bones and spleen, liver, muscles and blood, kidneys, lungs and brain, and at last the heart.</td></tr>
+      <tr><td>Attribute</td><td>A single worthiness-word each metal carries, the moral thread of its correspondence.</td></tr>
+      <tr><td>Guardian</td><td>The classical figure that wields the metal's star — Kronos, Zeus, Ares, Aphrodite, Hermes, Diana, Apollo.</td></tr>
+      <tr><td>Work Stage</td><td>The rung of the Great Work each metal holds as its appointed hour, from Calcination to Tincture.</td></tr>
+    </table>
+    <div class="notes-section">The stage terminology</div>
+    <table class="notes-table">
+      <tr><th>Tag</th><th>Meaning in this table</th></tr>
+      <tr><td>First Work</td><td>The opening of the Great Work, when the substance is still being broken down — below the quarter mark.</td></tr>
+      <tr><td>Middle Work</td><td>The furnace of the middle passage, between the first quarter and the half.</td></tr>
+      <tr><td>Second Work</td><td>The further refinement, past the halfway point of the operation.</td></tr>
+      <tr><td>Elixir near</td><td>The threshold of completion — three quarters across, the operation stands on the lip of the Elixir.</td></tr>
+    </table>
+    <p class="highlight-box">Every correspondence is fiction. The planets do not forge our pocket-metal, and no weekday transmutes a single atom.</p>
+  </div>
+  <button onclick="showScreen('screen1')">Return to Exploration</button>
+</div>
+
+<script>
+function goHome(){
+  // Hub lives one level up when an app is inside /apps/
+  const p=location.pathname;
+  window.location.href=(p.includes('/apps/'))?'../index.html':'index.html';
+}
+// Archive escape hatch: return link on every non-intro screen
+document.querySelectorAll('.app-container').forEach(c=>{
+  if(c.id==='screen1')return;
+  const nav=document.createElement('span');
+  nav.className='back-link';
+  nav.style.marginTop='10px';
+  nav.textContent='← Return to Archive';
+  nav.onclick=goHome;
+  c.appendChild(nav);
+});
+function showScreen(id){document.querySelectorAll('.app-container').forEach(el=>el.style.display='none');document.getElementById(id).style.display='flex';}
+document.getElementById('btnGotoScreen2').addEventListener('click',()=>showScreen('screen2'));
+document.getElementById('btnGotoScreen3').addEventListener('click',()=>showScreen('screen3'));
+document.getElementById('lnkHome').addEventListener('click',goHome);
+
+// ---- The seven planetary metals ----
+const METALS=[
+  {n:'Lead',sym:'Pb',planet:'Saturn',glyph:'♄',day:'Saturday',body:'Bones & Spleen',attr:'Patience',guardian:'Saturn · Kronos',stage:'Calcination',note:'The slowest of the seven, Saturn\'s metal keeps the clock of the great year; the alchemists called lead the infancy of gold.'},
+  {n:'Tin',sym:'Sn',planet:'Jupiter',glyph:'♃',day:'Thursday',body:'Liver',attr:'Justice',guardian:'Jupiter · Zeus',stage:'Sublimation',note:'The metal of the Thunderer\'s own day — our Thursday still carries his name, and tin thrums with his patient gravity.'},
+  {n:'Iron',sym:'Fe',planet:'Mars',glyph:'♂',day:'Tuesday',body:'Muscles & Blood',attr:'Courage',guardian:'Mars · Ares',stage:'Solution',note:'The blade-metal, born of the forge where war and labour shake hands; Tuesday trembles at its temper.'},
+  {n:'Copper',sym:'Cu',planet:'Venus',glyph:'♀',day:'Friday',body:'Kidneys',attr:'Love',guardian:'Venus · Aphrodite',stage:'Putrefaction',note:'The first ore coaxed from stone by fire, mirror of the goddess\'s warm glance; Friday is her quiet feast.'},
+  {n:'Quick-Silver',sym:'Hg',planet:'Mercury',glyph:'☿',day:'Wednesday',body:'Lungs & Brain',attr:'Discernment',guardian:'Mercury · Hermes',stage:'Distillation',note:'The messenger\'s own metal, the only liquid one — it refuses to stay still even while it sleeps, and Wednesday hurries after it.'},
+  {n:'Silver',sym:'Ag',planet:'Moon',glyph:'☽',day:'Monday',body:'Brain & Fluid',attr:'Intuition',guardian:'Moon · Diana',stage:'Coagulation',note:'Moon-metal, cold and bright; the alchemists saw the sky\'s night-lamp pressed into a coin, and Monday rings with her silver light.'},
+  {n:'Gold',sym:'Au',planet:'Sun',glyph:'☉',day:'Sunday',body:'Heart',attr:'Radiance',guardian:'Sun · Apollo',stage:'Tincture',note:'Sun-metal, the perfect body — nothing further to burn, nothing further to become; Sunday is its throne of light.'}
+];
+
+const chkAgree=document.getElementById('chkAgree');
+const slider=document.getElementById('workSlider');
+let selected=null;
+
+// ---- Build the seven metal buttons ----
+function buildMetals(){
+  const box=document.getElementById('metalButtons');
+  box.innerHTML=METALS.map((m,i)=>{
+    return '<button class="metal-btn" data-i="'+i+'" disabled><span>'+(i+1)+'. '+m.n+'</span><span class="msy">'+m.sym+' · '+m.glyph+'</span></button>';
+  }).join('');
+  document.querySelectorAll('.metal-btn').forEach(b=>{
+    b.addEventListener('click',()=>selectMetal(+b.getAttribute('data-i')));
+  });
+}
+function selectMetal(i){
+  selected=i;
+  document.querySelectorAll('.metal-btn').forEach((b,bi)=>b.classList.toggle('active',bi===i));
+  const m=METALS[i];
+  document.getElementById('dashPanel').style.display='block';
+  document.getElementById('rMetal').textContent=m.n;
+  document.getElementById('rDay').textContent=m.planet+' · '+m.day;
+  document.getElementById('rEl').textContent=m.sym;
+  document.getElementById('rBody').textContent=m.body;
+  document.getElementById('rAttr').textContent=m.attr;
+  document.getElementById('rGuard').textContent=m.guardian;
+  document.getElementById('rStage').textContent=m.stage;
+  document.getElementById('rPlanet').textContent=m.planet+' rules this metal';
+  document.getElementById('rGlyph').textContent=m.glyph;
+  document.getElementById('rLore').textContent=m.note;
+  updateTag();
+}
+
+// ---- Gates: nothing moves until the agreement is ticked ----
+function refreshBtn(){
+  document.querySelectorAll('.metal-btn').forEach(b=>{b.disabled=!chkAgree.checked;});
+}
+chkAgree.addEventListener('change',refreshBtn);
+document.getElementById('chkAgreeBox').addEventListener('click',(e)=>{
+  if(e.target.tagName!=='INPUT'){chkAgree.checked=!chkAgree.checked;refreshBtn();}
+});
+
+// ---- Work of the Art slider ----
+function stageLabel(v){
+  if(v<25)return 'First Work';
+  if(v<50)return 'Middle Work';
+  if(v<75)return 'Second Work';
+  return 'Elixir near';
+}
+function updateTag(){
+  const v=+slider.value;
+  document.getElementById('sliderVal').textContent=v+' / 100';
+  document.getElementById('stageTag').textContent=stageLabel(v);
+}
+slider.addEventListener('input',updateTag);
+updateTag();
+
+// ---- Full Ledger sweep ----
+document.getElementById('btnGotoSweep').addEventListener('click',()=>{
+  const rows=METALS.map(m=>{
+    return '<div class="sweep-row five"><span class="nm">'+m.n+'</span><span class="aud">'+m.glyph+' '+m.planet+'</span><span class="tr">'+m.day+'</span><span>'+m.body+'</span><span class="ok">'+m.stage+'</span></div>';
+  }).join('');
+  document.getElementById('sweepList').innerHTML='<div class="sweep-row five head"><span>Metal</span><span>Planet</span><span>Weekday</span><span>Body</span><span>Stage</span></div>'+rows;
+  showScreen('screen4');
+});
+
+buildMetals();
+</script>
+</body>
+</html>

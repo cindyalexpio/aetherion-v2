@@ -1,0 +1,21 @@
+Vercel CLI 59.5.0 (Node.js 24.19.0)
+Deploying aetherion-v2
+Uploading [--------------------] (0.0B/34.8KB)
+Uploading [===========---------] (19.5KB/34.8KB)
+Uploading [============--------] (21.8KB/34.8KB)
+Uploading [====================] (34.8KB/34.8KB)
+  Inspect         https://vercel.com/cindyalexpios-projects/aetherion-v2/2LSq1qQFZsVz1ykBrdpq2D2csc73
+  Production      https://aetherion-v2-f465sc5zh-cindyalexpios-projects.vercel.app
+Building…
+{
+  "status": "error",
+  "reason": "deploy_failed",
+  "message": "Not authorized",
+  "next": [
+    {
+      "command": "vercel deploy",
+      "when": "retry deploy"
+    }
+  ]
+}
+Error: Not authorized
